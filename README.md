@@ -1,5 +1,5 @@
 # PlantGo *
-<img src="https://imgur.com/Q4gkHXc" width="300">
+<img src="/PlantGo_Logo-v1.png" width="300">
 A Flutter project, For My Final Project essay
 .
 cheers
