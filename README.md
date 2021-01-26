@@ -1,6 +1,10 @@
-# plantgo_alpha
+# PlantGo *
+<img src="https://www.behance.net/gallery/112170647/PlantGo-logo?" width="300">
+A Flutter project, For My Final Project essay
+.
+cheers
+Naufal A.P
 
-A new Flutter project.
 
 ## Getting Started
 
