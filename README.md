@@ -1,8 +1,8 @@
 # PlantGo *
 <img src="/PlantGo_Logo-v1.png" width="300">
-A Flutter project, For My Final Project essay
+A Flutter project, For My Final Essay Project
 .
-cheers
+wish me luck
 Naufal A.P
 
 
