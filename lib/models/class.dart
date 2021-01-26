@@ -1,9 +1,9 @@
 class Tanaman {
-  String id, imageUrl, title, color;
+  String id, image, title;
   List<String> steps;
   List<String> tools;
- 
+  int color;
 
   Tanaman(
-      {this.id, this.title, this.imageUrl, this.steps, this.tools, this.color});
+      {this.id, this.title, this.image, this.steps, this.tools, this.color});
 }

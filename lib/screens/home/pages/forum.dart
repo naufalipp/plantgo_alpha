@@ -5,90 +5,64 @@ import 'package:plantgo_alpha/models/data.dart';
 class Forum extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SafeArea(
-      child: ListView(
-        children: [
-          Container(
-            margin: EdgeInsets.only(bottom: kDefaultPadding * 2.5),
-            // It will cover 20% of our total height
-            height: 180,
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(
-                    left: kDefaultPadding,
-                    right: kDefaultPadding,
-                    bottom: 36 + kDefaultPadding,
-                  ),
-                  height: 120,
-                  decoration: BoxDecoration(
-                    color: kDarkGreenColor,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(36),
-                      bottomRight: Radius.circular(36),
-                    ),
-                  ),
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        'Mari Berkebun dirumah',
-                        style: Theme.of(context).textTheme.headline5.copyWith(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                      Spacer(),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
+    var body = Container(
+      child: GridView.builder(
+          shrinkWrap: true,
+          itemCount: Data.tanaman.length,
+          gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                onTap: () {},
+                child: Card(
+                  color: Color(Data.tanaman[index]
+                      .color), //ganti sama color di data nanti!!!
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0)),
                   child: Container(
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                    padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(0, 10),
-                          blurRadius: 50,
-                          color: kDarkGreenColor.withOpacity(0.23),
-                        ),
-                      ],
-                    ),
-                    child: Row(
+                    width: MediaQuery.of(context).size.width / 2,
+                    height: 50,
+                    child: Column(
                       children: <Widget>[
                         Expanded(
-                          child: TextField(
-                            onChanged: (value) {},
-                            decoration: InputDecoration(
-                              hintText: "Search",
-                              hintStyle: TextStyle(
-                                color: kDarkGreenColor.withOpacity(0.5),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(8.0),
+                              topRight: Radius.circular(8.0),
+                            ),
+                            child: Hero(
+                              tag: Data.tanaman[index].id,
+                              child: FadeInImage(
+                                image: AssetImage(Data.tanaman[index].image),
+                                fit: BoxFit.cover,
+                                placeholder:
+                                    AssetImage('assets/images/loading.gif'),
                               ),
-                              enabledBorder: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              // surffix isn't working properly  with SVG
-                              // thats why we use row
-                              // suffixIcon: SvgPicture.asset("assets/icons/search.svg"),
                             ),
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text(
+                            Data.tanaman[index].title,
+                            style: TextStyle(
+                                color: kBlackColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        )
                       ],
                     ),
                   ),
                 ),
-              ],
-            ),
-          ),
-          Container(
-              child: GridView.builder(gridDelegate: null, itemBuilder: null)),
-        ],
-      ),
-    ));
+              ),
+            );
+          }),
+    );
+    return Scaffold(
+      body: body,
+    );
   }
 }
