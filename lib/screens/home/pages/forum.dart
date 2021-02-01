@@ -37,8 +37,8 @@ class Forum extends StatelessWidget {
                               child: FadeInImage(
                                 image: AssetImage(Data.tanaman[index].image),
                                 fit: BoxFit.cover,
-                                placeholder:
-                                    AssetImage('assets/images/loading.gif'),
+                                placeholder: AssetImage(
+                                    'assets/images/loading-green.gif'),
                               ),
                             ),
                           ),

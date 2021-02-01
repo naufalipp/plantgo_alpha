@@ -5,7 +5,7 @@ class Data {
     Tanaman(
         id: '1',
         title: 'Sawi Hidroponik',
-        image: "assets/images/sawi1.jpg",
+        image: "assets/images/sawi0.jpg",
         steps: [
           'Siapkan alat dan Bahan : 1.Rockwoll, 2.Sprayer/Penyemprot Air, 3.Pinset, 4.Benih Sawi',
           'Siapkan media tanam, potong rockwool setebal 2,5 cm. Iris memanjang sedalam kurang lebih 1 cm menjadi 3 bagian dan iris melintang menjadi 6 bagian sedalam 1 cm. Lihat gambar di bawah ini untuk detailnya.',
@@ -23,7 +23,7 @@ class Data {
     Tanaman(
         id: '2',
         title: 'Selada Hidroponik',
-        image: "assets/images/sawi2.jpg",
+        image: "assets/images/sawi1.jpg",
         steps: [
           'Siapkan alat dan Bahan : 1.Rockwoll, 2.Sprayer/Penyemprot Air, 3.Pinset, 4.Benih Sawi',
           'Siapkan media tanam, potong rockwool setebal 2,5 cm. Iris memanjang sedalam kurang lebih 1 cm menjadi 3 bagian dan iris melintang menjadi 6 bagian sedalam 1 cm. Lihat gambar di bawah ini untuk detailnya.',
@@ -37,6 +37,6 @@ class Data {
           'Masa Panen Sayur Sawi Hidroponik adalah sekitar 30-40 hari dengan cara dicabut beserta akarnya.'
         ],
         tools: ['Rockwoll', 'Sprayer/penyemprot air', 'pinset', 'Benih Sawi'],
-        color: 0xFFD3EB91),
+        color: 0xFFFFC4C0),
   ];
 }
