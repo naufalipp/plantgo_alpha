@@ -118,6 +118,71 @@ class Profile extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10.0)),
                           child: Container(
                             height: 120,
+                            child: Row(
+                              children: <Widget>[
+                                Expanded(
+                                  flex: 2,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      Container(
+                                        margin: EdgeInsets.only(left: 10),
+                                        height: 50,
+                                        width: 60,
+                                        child: Image(
+                                          image: AssetImage(
+                                              Data.tanaman[index].icon),
+                                        ),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(left: 10),
+                                        child: Text(Data.tanaman[index].title,
+                                            style: GoogleFonts.allerta(
+                                              fontSize: 17,
+                                              color: Colors.black,
+                                            )),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: ShaderMask(
+                                    shaderCallback: (rect) {
+                                      return LinearGradient(
+                                        begin: Alignment.centerRight,
+                                        end: Alignment.centerLeft,
+                                        colors: [
+                                          Colors.black,
+                                          Colors.transparent
+                                        ],
+                                      ).createShader(Rect.fromLTRB(
+                                          0, 0, rect.width, rect.height));
+                                    },
+                                    blendMode: BlendMode.dstIn,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(10.0),
+                                        topRight: Radius.circular(10.0),
+                                      ),
+                                      child: Hero(
+                                        tag: Data.tanaman[index].id,
+                                        child: FadeInImage(
+                                          image: AssetImage(
+                                              Data.tanaman[index].image),
+                                          fit: BoxFit.cover,
+                                          placeholder: AssetImage(
+                                              'assets/images/loading-green.gif'),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           )),
                     ),
                   );
