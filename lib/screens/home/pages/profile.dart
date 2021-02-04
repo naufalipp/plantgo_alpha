@@ -3,6 +3,7 @@ import 'package:plantgo_alpha/constans/color_constans.dart';
 import 'package:plantgo_alpha/models/plantico_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:plantgo_alpha/models/data.dart';
+import 'package:plantgo_alpha/screens/home/pages/plantdetails.dart';
 
 class Profile extends StatelessWidget {
   @override
@@ -72,7 +73,7 @@ class Profile extends StatelessWidget {
                             child: TextField(
                               onChanged: (value) {},
                               decoration: InputDecoration(
-                                hintText: "Weather",
+                                hintText: "Card bagian Weather 'nanti'",
                                 hintStyle: TextStyle(
                                   color: kDarkGreenColor.withOpacity(0.5),
                                 ),
@@ -111,7 +112,14 @@ class Profile extends StatelessWidget {
                         top: 2, left: 16, right: 16, bottom: 8),
                     child: InkWell(
                       splashColor: kDarkGreenColor,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PlantDetails(
+                                      tanaman: Data.tanaman[index],
+                                    )));
+                      },
                       child: Card(
                           color: Color(Data.tanaman[index].color),
                           shape: RoundedRectangleBorder(
