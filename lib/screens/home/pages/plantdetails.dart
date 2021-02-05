@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plantgo_alpha/constans/color_constans.dart';
 import 'package:plantgo_alpha/models/class.dart';
-import 'package:plantgo_alpha/models/plantico_model.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:plantgo_alpha/models/data.dart';
 
 class PlantDetails extends StatelessWidget {
   final Tanaman tanaman;
@@ -40,6 +38,14 @@ class PlantDetails extends StatelessWidget {
             physics: BouncingScrollPhysics(),
             child: Column(
               children: <Widget>[
+                Text('Tools',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20)),
+                ToolsWidget(
+                  tools: tanaman.tools,
+                ),
                 Text('Langkah-langkah',
                     style: TextStyle(
                         color: Colors.white,
@@ -76,6 +82,7 @@ class TanamanSteps extends StatelessWidget {
             children: <Widget>[
               CircleAvatar(
                 //backgroundColor: Color(Data.tanaman.color),
+                backgroundColor: kMainColor,
                 child: Text('${index + 1}',
                     style: TextStyle(
                         color: Colors.black, fontWeight: FontWeight.bold)),
@@ -91,6 +98,36 @@ class TanamanSteps extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class ToolsWidget extends StatelessWidget {
+  final List<String> tools;
+  ToolsWidget({this.tools});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 50,
+      width: double.infinity,
+      child: ListView.builder(
+        itemCount: tools.length,
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        physics: BouncingScrollPhysics(),
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Chip(
+              backgroundColor: kMainColor,
+              label: Text(tools[index],
+                  style: GoogleFonts.openSans(
+                      color: Colors.white, fontWeight: FontWeight.bold)),
+            ),
+          );
+        },
+      ),
     );
   }
 }

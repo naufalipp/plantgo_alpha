@@ -7,6 +7,10 @@ class Data {
         title: 'Sawi Hidroponik',
         image: "assets/images/sawi0.jpg",
         icon: "assets/images/iconsawi.png",
+        toolsimg: [
+          'https://photos.google.com/u/5/share/AF1QipMdMrq64dX7Rd9iALCCc_Jj8dfy3UyJNfKZcIOq05Z0lco-WCRTRM9Jxc_exP-8ng/photo/AF1QipMlEZb3Snuq6cX_4RV0rZpu7D3hRHzigrDIgq1v?key=N00tYllENjVuTWZQSTVES2E1WTB6Xy1oTnBhREVB',
+          'https://photos.google.com/u/5/share/AF1QipMdMrq64dX7Rd9iALCCc_Jj8dfy3UyJNfKZcIOq05Z0lco-WCRTRM9Jxc_exP-8ng/photo/AF1QipP3ZtxdNPvJfrFfkEtmBjbxfJ8VaSyledzTcU0q?key=N00tYllENjVuTWZQSTVES2E1WTB6Xy1oTnBhREVB'
+        ],
         steps: [
           'Siapkan alat dan Bahan : 1.Rockwoll, 2.Sprayer/Penyemprot Air, 3.Pinset, 4.Benih Sawi',
           'Siapkan media tanam, potong rockwool setebal 2,5 cm. Iris memanjang sedalam kurang lebih 1 cm menjadi 3 bagian dan iris melintang menjadi 6 bagian sedalam 1 cm. Lihat gambar di bawah ini untuk detailnya.',
