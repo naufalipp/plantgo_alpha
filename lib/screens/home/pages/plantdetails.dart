@@ -18,7 +18,7 @@ class PlantDetails extends StatelessWidget {
               floating: false,
               pinned: true,
               title: Text(tanaman.title),
-              backgroundColor: kDarkGreenColor,
+              backgroundColor: Color(tanaman.color),
               flexibleSpace: FlexibleSpaceBar(
                 background: Hero(
                   tag: tanaman.id,
@@ -38,9 +38,9 @@ class PlantDetails extends StatelessWidget {
             physics: BouncingScrollPhysics(),
             child: Column(
               children: <Widget>[
-                Text('Tools',
+                Text('Alat dan Bahan',
                     style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 20)),
                 ToolsWidget(
@@ -48,7 +48,7 @@ class PlantDetails extends StatelessWidget {
                 ),
                 Text('Langkah-langkah',
                     style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 20)),
                 TanamanSteps(
@@ -104,30 +104,60 @@ class TanamanSteps extends StatelessWidget {
 
 class ToolsWidget extends StatelessWidget {
   final List<String> tools;
-  ToolsWidget({this.tools});
+  final List<String> toolsimg;
+  ToolsWidget({this.tools, this.toolsimg});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50,
+      height: 100,
       width: double.infinity,
       child: ListView.builder(
-        itemCount: tools.length,
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        physics: BouncingScrollPhysics(),
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Chip(
-              backgroundColor: kMainColor,
-              label: Text(tools[index],
-                  style: GoogleFonts.openSans(
-                      color: Colors.white, fontWeight: FontWeight.bold)),
-            ),
-          );
-        },
-      ),
+          itemCount: tools.length,
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          physics: BouncingScrollPhysics(),
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Container(
+                width: 80,
+                color: kMainColor,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 2,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(10.0),
+                          topRight: Radius.circular(10.0),
+                        ),
+                        child: Container(
+                          child: FadeInImage(
+                            image: NetworkImage(toolsimg[index]),
+                            fit: BoxFit.cover,
+                            placeholder:
+                                AssetImage('assets/images/loading-green.gif'),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Chip(
+                        backgroundColor: kMainColor,
+                        label: Text(tools[index],
+                            style: GoogleFonts.openSans(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }),
     );
   }
 }
