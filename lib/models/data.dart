@@ -7,10 +7,6 @@ class Data {
         title: 'Sawi Hidroponik',
         image: "assets/images/sawi0.jpg",
         icon: "assets/images/iconsawi.png",
-        toolsimg: [
-          'https://photos.google.com/u/5/share/AF1QipMdMrq64dX7Rd9iALCCc_Jj8dfy3UyJNfKZcIOq05Z0lco-WCRTRM9Jxc_exP-8ng/photo/AF1QipMlEZb3Snuq6cX_4RV0rZpu7D3hRHzigrDIgq1v?key=N00tYllENjVuTWZQSTVES2E1WTB6Xy1oTnBhREVB',
-          'https://photos.google.com/u/5/share/AF1QipMdMrq64dX7Rd9iALCCc_Jj8dfy3UyJNfKZcIOq05Z0lco-WCRTRM9Jxc_exP-8ng/photo/AF1QipP3ZtxdNPvJfrFfkEtmBjbxfJ8VaSyledzTcU0q?key=N00tYllENjVuTWZQSTVES2E1WTB6Xy1oTnBhREVB'
-        ],
         steps: [
           'Siapkan alat dan Bahan : 1.Rockwoll, 2.Sprayer/Penyemprot Air, 3.Pinset, 4.Benih Sawi',
           'Siapkan media tanam, potong rockwool setebal 2,5 cm. Iris memanjang sedalam kurang lebih 1 cm menjadi 3 bagian dan iris melintang menjadi 6 bagian sedalam 1 cm. Lihat gambar di bawah ini untuk detailnya.',
@@ -23,7 +19,24 @@ class Data {
           'Letakkan netpot ke dalam sistem hidroponik, pada tahap ini nutrisi yang diberikan kepekatannya 600 ppm. Kepekatan nutrisi dinaikkan setelah masuk 5 hari setelah pindah tanam menjadi 800 ppm. Setelah memasuki 10 hari setelah tanam, naikkan kepekatan nutrisi menjadi 1200 ppm. Jaga ppm nutrisi selalu stabil di angka tersebut sampai panen.',
           'Masa Panen Sayur Sawi Hidroponik adalah sekitar 30-40 hari dengan cara dicabut beserta akarnya.'
         ],
-        tools: ['Rockwoll', 'Sprayer/penyemprot air', 'pinset', 'Benih Sawi'],
+        tools: [
+          Tools(
+              name: 'Rockwoll',
+              imageUrl:
+                  'https://cf.shopee.co.id/file/6ae804b753a559ecce3b4417394e35cc'),
+          Tools(
+              name: 'Penyemprot air',
+              imageUrl:
+                  'https://media.tractorsupply.com/is/image/TractorSupplyCompany/4428569?'),
+          Tools(
+              name: 'pinset',
+              imageUrl:
+                  'https://ecs7.tokopedia.net/img/cache/700/product-1/2018/6/4/2594958/2594958_ca44b23f-6f46-4faf-ad33-4fc3c17771c6_1100_1100.jpg'),
+          Tools(
+              name: 'Benih Sawi',
+              imageUrl:
+                  'https://lh3.googleusercontent.com/pw/ACtC-3duaQUIV_r9CDX1fNvGB_YawVl9lfTNGED7TCd3oIfg-BWpPmlv1doI1vhaVZQnq2LXlKdtKNTGgC-DVUAy4lfcayAXujpJCxkm3MIAs8fuHJm6swNpDaMgzYy9ZvNzhCXOiQRzuyezXlOBHdUYubxX=s645'),
+        ],
         color: 0xFFD3EB91),
     Tanaman(
         id: '2',
@@ -42,7 +55,6 @@ class Data {
           'Letakkan netpot ke dalam sistem hidroponik, pada tahap ini nutrisi yang diberikan kepekatannya 600 ppm. Kepekatan nutrisi dinaikkan setelah masuk 5 hari setelah pindah tanam menjadi 800 ppm. Setelah memasuki 10 hari setelah tanam, naikkan kepekatan nutrisi menjadi 1200 ppm. Jaga ppm nutrisi selalu stabil di angka tersebut sampai panen.',
           'Masa Panen Sayur Sawi Hidroponik adalah sekitar 30-40 hari dengan cara dicabut beserta akarnya.'
         ],
-        tools: ['Rockwoll', 'Sprayer/penyemprot air', 'pinset', 'Benih Sawi'],
         color: 0xFFFFD1A6),
     Tanaman(
         id: '3',
@@ -61,7 +73,6 @@ class Data {
           'Letakkan netpot ke dalam sistem hidroponik, pada tahap ini nutrisi yang diberikan kepekatannya 600 ppm. Kepekatan nutrisi dinaikkan setelah masuk 5 hari setelah pindah tanam menjadi 800 ppm. Setelah memasuki 10 hari setelah tanam, naikkan kepekatan nutrisi menjadi 1200 ppm. Jaga ppm nutrisi selalu stabil di angka tersebut sampai panen.',
           'Masa Panen Sayur Sawi Hidroponik adalah sekitar 30-40 hari dengan cara dicabut beserta akarnya.'
         ],
-        tools: ['Rockwoll', 'Sprayer/penyemprot air', 'pinset', 'Benih Sawi'],
         color: 0xFFFFC4C0),
   ];
 }

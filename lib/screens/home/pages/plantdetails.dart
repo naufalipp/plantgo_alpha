@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:plantgo_alpha/constans/color_constans.dart';
 import 'package:plantgo_alpha/models/class.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:plantgo_alpha/models/widgets.dart';
 
 class PlantDetails extends StatelessWidget {
   final Tanaman tanaman;
@@ -39,7 +40,7 @@ class PlantDetails extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Text('Alat dan Bahan',
-                    style: TextStyle(
+                    style: GoogleFonts.openSans(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 20)),
@@ -47,7 +48,7 @@ class PlantDetails extends StatelessWidget {
                   tools: tanaman.tools,
                 ),
                 Text('Langkah-langkah',
-                    style: TextStyle(
+                    style: GoogleFonts.openSans(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 20)),
@@ -103,61 +104,25 @@ class TanamanSteps extends StatelessWidget {
 }
 
 class ToolsWidget extends StatelessWidget {
-  final List<String> tools;
-  final List<String> toolsimg;
-  ToolsWidget({this.tools, this.toolsimg});
+  final List<Tools> tools;
+  ToolsWidget({this.tools});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 100,
+      height: 160,
       width: double.infinity,
       child: ListView.builder(
-          itemCount: tools.length,
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          physics: BouncingScrollPhysics(),
-          itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Container(
-                width: 80,
-                color: kMainColor,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 2,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(10.0),
-                          topRight: Radius.circular(10.0),
-                        ),
-                        child: Container(
-                          child: FadeInImage(
-                            image: NetworkImage(toolsimg[index]),
-                            fit: BoxFit.cover,
-                            placeholder:
-                                AssetImage('assets/images/loading-green.gif'),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Chip(
-                        backgroundColor: kMainColor,
-                        label: Text(tools[index],
-                            style: GoogleFonts.openSans(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold)),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }),
+        itemCount: tools.length,
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        physics: BouncingScrollPhysics(),
+        itemBuilder: (BuildContext context, int index) {
+          return ToolsTag(
+            tools: tools[index],
+          );
+        },
+      ),
     );
   }
 }

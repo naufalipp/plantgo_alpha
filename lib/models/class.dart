@@ -1,8 +1,13 @@
+class Tools {
+  String name;
+  String imageUrl;
+  Tools({this.name, this.imageUrl});
+}
+
 class Tanaman {
   String id, image, title, icon;
   List<String> steps;
-  List<String> tools;
-  List<String> toolsimg;
+  List<Tools> tools;
   int color;
 
   Tanaman(
@@ -12,6 +17,5 @@ class Tanaman {
       this.steps,
       this.tools,
       this.color,
-      this.toolsimg,
       this.icon});
 }
