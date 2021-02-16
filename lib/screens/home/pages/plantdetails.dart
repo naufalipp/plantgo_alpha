@@ -34,6 +34,7 @@ class PlantDetails extends StatelessWidget {
           ];
         },
         body: Container(
+          color: kWhiteColor,
           padding: EdgeInsets.only(top: 8.0),
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),

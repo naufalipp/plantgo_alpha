@@ -17,20 +17,9 @@ class ToolsTag extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Image.network(
-              tools.imageUrl,
-              loadingBuilder: (BuildContext context, Widget child,
-                  ImageChunkEvent loadingProgress) {
-                if (loadingProgress == null) return child;
-                return Center(
-                  child: CircularProgressIndicator(
-                    value: loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes
-                        : null,
-                  ),
-                );
-              },
+            FadeInImage.assetNetwork(
+              placeholder: 'assets/images/loading-green.gif',
+              image: tools.imageUrl,
             ),
             Text(
               tools.name,

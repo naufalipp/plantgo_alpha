@@ -35,14 +35,17 @@ class _HomeScreenState extends State<HomeScreen> {
           style: GoogleFonts.allerta(
               fontSize: 18, fontWeight: FontWeight.bold, color: kWhiteColor),
         ),
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          color: kWhiteColor,
-          onPressed: () {},
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: new Icon(Icons.menu),
+            color: kWhiteColor,
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
         ),
         backgroundColor: kDarkGreenColor,
         elevation: 0.0,
       ),
+      drawer: Drawer(),
       body: _layoutPage.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,

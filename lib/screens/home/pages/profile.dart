@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plantgo_alpha/constans/color_constans.dart';
-import 'package:plantgo_alpha/models/plantico_model.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:plantgo_alpha/models/data.dart';
 import 'package:plantgo_alpha/screens/home/pages/plantdetails.dart';

@@ -1,184 +1,201 @@
 import 'package:flutter/material.dart';
-import 'package:plantgo_alpha/constans/color_constans.dart';
-import 'package:plantgo_alpha/models/plantico_model.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
+import 'package:plantgo_alpha/constans/color_constans.dart';
+import 'package:plantgo_alpha/models/data.dart';
+import 'package:plantgo_alpha/screens/home/pages/plantdetails.dart';
 
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          child: ListView(
-            physics: BouncingScrollPhysics(),
-            children: <Widget>[
-              Stack(
-                //Disini BROOOO PUSING YEUHHHHHHHH
+        child: ListView(
+          physics:
+              AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(bottom: kDefaultPadding * 1),
+              // It will cover 20% of our total height
+              height: 150,
+              child: Stack(
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.only(top: 0),
-                    height: 250,
-                    color: kMainColor,
-                    child: Container(
-                      margin: EdgeInsets.only(
-                        top: 70,
-                        left: 160,
-                      ),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/sawi1.jpg'),
-                          fit: BoxFit.contain,
-                        ),
+                    padding: EdgeInsets.only(
+                      left: kDefaultPadding,
+                      right: kDefaultPadding,
+                      bottom: 36 + kDefaultPadding,
+                    ),
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: kDarkGreenColor,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(36),
+                        bottomRight: Radius.circular(36),
                       ),
                     ),
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          'Mari Berkebun dirumah',
+                          style: Theme.of(context).textTheme.headline5.copyWith(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                        Spacer(),
+                      ],
+                    ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: 70, left: 150),
-                    height: 180.0,
-                    decoration: BoxDecoration(
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    top: 60,
+                    child: Container(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                      height: 100,
+                      decoration: BoxDecoration(
                         color: Colors.white,
-                        gradient: LinearGradient(
-                            begin: FractionalOffset.centerRight,
-                            end: FractionalOffset.centerLeft,
-                            colors: [
-                              Colors.green[50].withOpacity(0.0),
-                              kMainColor,
-                            ],
-                            stops: [
-                              0.5,
-                              0.9
-                            ])),
-                  ),
-                  Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(0.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.zero,
-                          topRight: Radius.zero,
-                        ),
-                        child: Container(
-                          height: 70.0,
-                          margin: const EdgeInsets.only(
-                              bottom: 6.0), //Same as `blurRadius` i guess
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(5.5),
-                              bottomRight: Radius.circular(5.5),
-                              topLeft: Radius.zero,
-                              topRight: Radius.zero,
-                            ),
-                            color: kDarkGreenColor,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black,
-                                offset: Offset(0.0, 1.0), //(x,y)
-                                blurRadius: 3.0,
-                              ),
-                            ],
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(0, 10),
+                            blurRadius: 50,
+                            color: kDarkGreenColor.withOpacity(0.23),
                           ),
-                          child: ListView.builder(
-                              padding: EdgeInsets.only(left: 10, right: 5),
-                              itemCount: planticos.length,
-                              physics: BouncingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  margin: EdgeInsets.only(right: 15, bottom: 6),
-                                  height: 40,
-                                  width: 70,
-                                  decoration: BoxDecoration(
-                                    color: kMainColor.withOpacity(0),
-                                    image: DecorationImage(
-                                      image: AssetImage(planticos[index].image),
-                                    ),
-                                  ),
-                                );
-                              }),
-                        ),
+                        ],
+                      ),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: TextField(
+                              onChanged: (value) {},
+                              decoration: InputDecoration(
+                                hintText: "Card bagian Weather 'nanti'",
+                                hintStyle: TextStyle(
+                                  color: kDarkGreenColor.withOpacity(0.5),
+                                ),
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                // surffix isn't working properly  with SVG
+                                // thats why we use row
+                                // suffixIcon: SvgPicture.asset("assets/icons/search.svg"),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ],
               ),
-              Container(
-                margin: EdgeInsets.only(top: 22),
-                height: 100,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Card(
-                      color: kMainColor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
-                      child: Container(
-                        width: 140,
-                        height: 80,
-                        // button color
-                        child: InkWell(
-                          splashColor: Colors.lightBlue[100], // splash color
-                          onTap: () {}, // button pressed
-
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              SvgPicture.asset(
-                                'assets/icons/leaf.svg',
-                                height: 30,
-                                width: 30,
-                                color: Colors.white,
-                              ),
-                              SizedBox(height: 8),
-                              // icon
-                              Text("Penanaman",
-                                  style: GoogleFonts.roboto(
-                                    fontSize: 17,
-                                    color: Colors.white,
-                                  )), // text
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Card(
-                      color: kMainColor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
-                      child: Container(
-                        width: 140,
-                        height: 80,
-                        child: InkWell(
-                          splashColor: Colors.lightBlue[100], // splash color
-                          onTap: () {}, // button pressed
-
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              SvgPicture.asset(
-                                'assets/icons/bug.svg',
-                                height: 30,
-                                width: 30,
-                                color: Colors.white,
-                              ),
-                              SizedBox(height: 8),
-                              Text("Penyakit & Hama",
-                                  style: GoogleFonts.roboto(
-                                    fontSize: 17,
-                                    color: Colors.white,
-                                  )), // text
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+            ),
+            Container(
+              height: 20,
+              margin: EdgeInsets.only(left: 20, right: 14, bottom: 5),
+              child: Text(
+                '• Pilih berbagai macam tanaman yang anda inginkan',
+                style: GoogleFonts.openSans(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: kDarkGreenColor),
               ),
-            ],
-          ),
+            ),
+            ListView.builder(
+                shrinkWrap: true,
+                itemCount: Data.tanaman.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                        top: 2, left: 16, right: 16, bottom: 8),
+                    child: InkWell(
+                      splashColor: kDarkGreenColor,
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PlantDetails(
+                                      tanaman: Data.tanaman[index],
+                                    )));
+                      },
+                      child: Card(
+                          color: Color(Data.tanaman[index].color),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          child: Container(
+                            height: 120,
+                            child: Row(
+                              children: <Widget>[
+                                Expanded(
+                                  flex: 2,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      Container(
+                                        margin: EdgeInsets.only(left: 10),
+                                        height: 50,
+                                        width: 60,
+                                        child: Image(
+                                          image: AssetImage(
+                                              Data.tanaman[index].icon),
+                                        ),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(left: 10),
+                                        child: Text(Data.tanaman[index].title,
+                                            style: GoogleFonts.allerta(
+                                              fontSize: 17,
+                                              color: Colors.black,
+                                            )),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: ShaderMask(
+                                    shaderCallback: (rect) {
+                                      return LinearGradient(
+                                        begin: Alignment.centerRight,
+                                        end: Alignment.centerLeft,
+                                        colors: [
+                                          Colors.black,
+                                          Colors.transparent
+                                        ],
+                                      ).createShader(Rect.fromLTRB(
+                                          0, 0, rect.width, rect.height));
+                                    },
+                                    blendMode: BlendMode.dstIn,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(10.0),
+                                        topRight: Radius.circular(10.0),
+                                      ),
+                                      child: Hero(
+                                        tag: Data.tanaman[index].id,
+                                        child: FadeInImage(
+                                          image: AssetImage(
+                                              Data.tanaman[index].image),
+                                          fit: BoxFit.cover,
+                                          placeholder: AssetImage(
+                                              'assets/images/loading-green.gif'),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                    ),
+                  );
+                }),
+          ],
         ),
       ),
     );
