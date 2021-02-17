@@ -5,6 +5,7 @@ import 'package:plantgo_alpha/constans/color_constans.dart';
 import 'package:plantgo_alpha/screens/home/pages/body.dart';
 import 'package:plantgo_alpha/screens/home/pages/profile.dart';
 import 'package:plantgo_alpha/screens/home/pages/forum.dart';
+import 'package:plantgo_alpha/screens/home/auth/login_page.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key, this.title}) : super(key: key);
@@ -18,7 +19,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
-  final _layoutPage = [Body(), Forum(), Profile()];
+  final _layoutPage = [Body(), Forum(), LoginPage()];
 
   void _onTapItem(int index) {
     setState(() {
@@ -31,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: new AppBar(
         title: Text(
-          "PlantGo *alpha",
+          "PlantGo *alphX",
           style: GoogleFonts.allerta(
               fontSize: 18, fontWeight: FontWeight.bold, color: kWhiteColor),
         ),

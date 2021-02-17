@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1019936680384",
+    "project_id": "plantgo-46b7a",
+    "storage_bucket": "plantgo-46b7a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019936680384:android:edab7ddbe9bf8191e38025",
+        "android_client_info": {
+          "package_name": "id.skyward.plantgo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1019936680384-k6015ollc2mqddol9geksqlp16rbddjr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.skyward.plantgo",
+            "certificate_hash": "bb60166df7f8256b968120c3e2198ff41765c751"
+          }
+        },
+        {
+          "client_id": "1019936680384-8scvrddlnj8q2ncb2a5tdf04t5nqo07i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvOcnAYSK1rQPsR6GTdLmVtVx6Ar1bCNQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1019936680384-8scvrddlnj8q2ncb2a5tdf04t5nqo07i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
