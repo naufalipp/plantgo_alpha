@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:plantgo_alpha/constans/color_constans.dart';
 import 'package:plantgo_alpha/constans/fadeanimation.dart';
+
+import 'package:plantgo_alpha/screens/home/auth/authentication_service.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -7,6 +12,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool _isObscure = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,41 +25,43 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               children: <Widget>[
                 Container(
-                  height: 400,
+                  height: 250,
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image:
-                              AssetImage('assets/images/backgroundLogin.png'),
+                              AssetImage('assets/images/backgroundLogin2.png'),
                           fit: BoxFit.fill)),
                   child: Stack(
                     children: <Widget>[
                       Positioned(
                         right: 40,
-                        top: 40,
-                        width: 80,
-                        height: 600,
+                        top: 20,
+                        width: 150,
+                        height: 350,
                         child: FadeAnimation(
                             1.5,
                             Container(
-                              width: 100.0,
-                              height: 50.0,
+                              width: 60,
+                              height: 50,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
-                                      scale: 1.5,
                                       image: AssetImage(
-                                        'assets/images/logover2.png',
-                                      ))),
+                                        'assets/images/logover3-shadow.png',
+                                      ),
+                                      fit: BoxFit.fitWidth)),
                             )),
                       ),
                       Positioned(
+                        top: 7,
+                        right: 100,
                         child: FadeAnimation(
                             1.6,
                             Container(
                               margin: EdgeInsets.only(top: 50),
                               child: Center(
                                 child: Text(
-                                  "Login",
-                                  style: TextStyle(
+                                  "Plant Go",
+                                  style: GoogleFonts.montserrat(
                                       color: Colors.white,
                                       fontSize: 40,
                                       fontWeight: FontWeight.bold),
@@ -74,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                                 borderRadius: BorderRadius.circular(10),
                                 boxShadow: [
                                   BoxShadow(
-                                      color: Color.fromRGBO(143, 148, 251, .2),
+                                      color: kGreyColor,
                                       blurRadius: 20.0,
                                       offset: Offset(0, 10))
                                 ]),
@@ -87,21 +98,35 @@ class _LoginPageState extends State<LoginPage> {
                                           bottom: BorderSide(
                                               color: Colors.grey[100]))),
                                   child: TextField(
+                                    controller: emailController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintText: "Email or Phone number",
                                         hintStyle:
-                                            TextStyle(color: Colors.grey[400])),
+                                            TextStyle(color: Colors.grey[500])),
                                   ),
                                 ),
                                 Container(
                                   padding: EdgeInsets.all(8.0),
                                   child: TextField(
+                                    obscureText: _isObscure,
+                                    controller: passwordController,
                                     decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: "Password",
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey[400])),
+                                      border: InputBorder.none,
+                                      hintText: "Password",
+                                      hintStyle:
+                                          TextStyle(color: Colors.grey[500]),
+                                      suffixIcon: IconButton(
+                                        icon: Icon(_isObscure
+                                            ? Icons.visibility
+                                            : Icons.visibility_off),
+                                        onPressed: () {
+                                          setState(() {
+                                            _isObscure = !_isObscure;
+                                          });
+                                        },
+                                      ),
+                                    ),
                                   ),
                                 )
                               ],
@@ -111,24 +136,64 @@ class _LoginPageState extends State<LoginPage> {
                         height: 30,
                       ),
                       FadeAnimation(
-                          2,
-                          Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                gradient: LinearGradient(colors: [
-                                  Color.fromRGBO(128, 178, 65, 1),
-                                  Color.fromRGBO(173, 206, 126, .6),
-                                ])),
-                            child: Center(
-                              child: Text(
-                                "Login",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
+                        2,
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                              vertical: 8.0, horizontal: 16.0),
+                          child: Material(
+                            // <----------------------------- Outer Material
+                            shadowColor: Colors.grey[50],
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0)),
+                            elevation: 6.0,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                gradient: LinearGradient(
+                                  begin: AlignmentDirectional.bottomStart,
+                                  end: AlignmentDirectional.topEnd,
+                                  colors: [
+                                    kMainColor,
+                                    kDarkGreenColor,
+                                  ],
+                                ),
+                              ),
+                              child: Material(
+                                // <------------------------- Inner Material
+                                type: MaterialType.transparency,
+                                elevation: 6.0,
+                                color: Colors.transparent,
+                                shadowColor: Colors.grey[50],
+                                child: InkWell(
+                                  //<------------------------- InkWell
+                                  splashColor: Colors.white30,
+                                  onTap: () {
+                                    context
+                                        .read<AuthenticationService>()
+                                        .signIn(
+                                          email: emailController.text.trim(),
+                                          password:
+                                              passwordController.text.trim(),
+                                        );
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(16.0),
+                                    child: Center(
+                                      child: Text(
+                                        "Login",
+                                        style: GoogleFonts.openSans(
+                                            fontSize: 18,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          )),
+                          ),
+                        ),
+                      ),
                       SizedBox(
                         height: 70,
                       ),

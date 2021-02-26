@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import 'package:plantgo_alpha/constans/color_constans.dart';
+import 'package:plantgo_alpha/screens/home/auth/authentication_service.dart';
 import 'package:plantgo_alpha/screens/home/pages/body.dart';
 import 'package:plantgo_alpha/screens/home/pages/profile.dart';
 import 'package:plantgo_alpha/screens/home/pages/forum.dart';
-import 'package:plantgo_alpha/screens/home/auth/login_page.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key, this.title}) : super(key: key);
@@ -19,7 +20,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
-  final _layoutPage = [Body(), Forum(), LoginPage()];
+  final _layoutPage = [Body(), Forum(), Profile()];
 
   void _onTapItem(int index) {
     setState(() {
@@ -32,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: new AppBar(
         title: Text(
-          "PlantGo *alphX",
+          "PlantGo ",
           style: GoogleFonts.allerta(
               fontSize: 18, fontWeight: FontWeight.bold, color: kWhiteColor),
         ),
@@ -46,7 +47,32 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: kDarkGreenColor,
         elevation: 0.0,
       ),
-      drawer: Drawer(),
+      drawer: Drawer(
+        child: Column(
+          // Changed this to a Column from a ListView
+          children: <Widget>[
+            _createHeader(),
+            ListTile(title: Text('First item')),
+            Expanded(
+                child:
+                    Container()), // Add this to force the bottom items to the lowest point
+            Column(
+              children: <Widget>[
+                _createFooterItem(
+                    icon: Icons.event,
+                    text: 'Settings',
+                    onTap: () => Navigator.pushReplacementNamed(context, '/')),
+                _createFooterItem(
+                    icon: Icons.exit_to_app,
+                    text: 'Logout',
+                    onTap: () {
+                      context.read<AuthenticationService>().signOut();
+                    }),
+              ],
+            ),
+          ],
+        ),
+      ),
       body: _layoutPage.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
@@ -69,4 +95,40 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+
+Widget _createHeader() {
+  return DrawerHeader(
+      margin: EdgeInsets.zero,
+      padding: EdgeInsets.zero,
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              fit: BoxFit.fill,
+              image: AssetImage('assets/images/backgroundLogin2.png'))),
+      child: Stack(children: <Widget>[
+        Positioned(
+            bottom: 12.0,
+            left: 16.0,
+            child: Text("Flutter Step-by-Step",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w500))),
+      ]));
+}
+
+Widget _createFooterItem(
+    {IconData icon, String text, GestureTapCallback onTap}) {
+  return ListTile(
+    title: Row(
+      children: <Widget>[
+        Icon(icon),
+        Padding(
+          padding: EdgeInsets.only(left: 8.0),
+          child: Text(text),
+        )
+      ],
+    ),
+    onTap: onTap,
+  );
 }
