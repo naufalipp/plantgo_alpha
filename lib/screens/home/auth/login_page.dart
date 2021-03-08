@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:plantgo_alpha/constans/color_constans.dart';
 import 'package:plantgo_alpha/constans/fadeanimation.dart';
 
+import 'signup_page.dart';
 import 'package:plantgo_alpha/screens/home/auth/authentication_service.dart';
 import 'package:provider/provider.dart';
 
@@ -72,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-                Padding(
+                Padding(  
                   padding: EdgeInsets.all(30.0),
                   child: Column(
                     children: <Widget>[
@@ -198,12 +199,21 @@ class _LoginPageState extends State<LoginPage> {
                         height: 70,
                       ),
                       FadeAnimation(
-                          1.5,
-                          Text(
+                        1.5,
+                        InkWell(
+                          child: Text(
                             "Forgot Password?",
                             style: TextStyle(
                                 color: Color.fromRGBO(143, 148, 251, 1)),
-                          )),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SignUpPage()));
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 )

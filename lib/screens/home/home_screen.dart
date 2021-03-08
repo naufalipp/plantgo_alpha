@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Column(
               children: <Widget>[
                 _createFooterItem(
-                    icon: Icons.event,
+                    icon: Icons.settings,
                     text: 'Settings',
                     onTap: () => Navigator.pushReplacementNamed(context, '/')),
                 _createFooterItem(
