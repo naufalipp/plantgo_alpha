@@ -1,13 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:plantgo_alpha/constans/color_constans.dart';
 import 'package:plantgo_alpha/constans/constans.dart';
 import 'package:plantgo_alpha/constans/fadeanimation.dart';
+import 'package:plantgo_alpha/screens/home/home_screen.dart';
 
 import 'signup_page.dart';
 import 'package:plantgo_alpha/screens/home/auth/authentication_service.dart';
+import 'package:plantgo_alpha/screens/home/auth/authentication_google.dart';
 import 'package:provider/provider.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -255,7 +259,19 @@ class _LoginPageState extends State<LoginPage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           _buildSocialBtn(
-            () => print('Login with Google'),
+            () => {
+              signInWithGoogle().then((result) {
+                if (result != null) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return HomeScreen();
+                      },
+                    ),
+                  );
+                }
+              })
+            },
             AssetImage(
               'assets/icons/google-logo.png',
             ),

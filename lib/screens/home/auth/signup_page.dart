@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:plantgo_alpha/screens/home/auth/login_page.dart';
 import 'authentication_service.dart';
 import 'package:provider/provider.dart';
 
@@ -15,10 +16,59 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
   bool _isObscure = true;
   bool _rememberMe = false;
+
+  Widget _buildUsername() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        FadeAnimation(
+          2,
+          Text(
+            'Username',
+            style: kLabelStyle,
+          ),
+        ),
+        SizedBox(height: 10.0),
+        FadeAnimation(
+          2,
+          Container(
+            alignment: Alignment.centerLeft,
+            decoration: BoxDecoration(
+              color: Color(0xFF95CF29),
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 6.0,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            height: 60.0,
+            child: TextField(
+              keyboardType: TextInputType.emailAddress,
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'OpenSans',
+              ),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(top: 14.0),
+                prefixIcon: Icon(
+                  Icons.email,
+                  color: Colors.white,
+                ),
+                hintText: 'Enter your Username',
+                hintStyle: kHintTextStyle,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 
   Widget _buildEmailTF() {
     return Column(
@@ -49,7 +99,6 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             height: 60.0,
             child: TextField(
-              controller: emailController,
               keyboardType: TextInputType.emailAddress,
               style: TextStyle(
                 color: Colors.white,
@@ -102,7 +151,6 @@ class _SignUpPageState extends State<SignUpPage> {
             height: 60.0,
             child: TextField(
               obscureText: _isObscure,
-              controller: passwordController,
               style: TextStyle(
                 color: Colors.white,
                 fontFamily: 'OpenSans',
@@ -180,12 +228,7 @@ class _SignUpPageState extends State<SignUpPage> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () => {
-          context.read<AuthenticationService>().signIn(
-                email: emailController.text.trim(),
-                password: passwordController.text.trim(),
-              )
-        },
+        onPressed: () => {},
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -267,7 +310,10 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Widget _buildSignupBtn() {
     return GestureDetector(
-      onTap: () => print('Sign Up Button Pressed'),
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
+      },
       child: RichText(
         text: TextSpan(
           children: [
@@ -325,7 +371,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   physics: AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.symmetric(
                     horizontal: 40.0,
-                    vertical: 120.0,
+                    vertical: 50.0,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -342,10 +388,14 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 30.0),
+                      SizedBox(height: 10.0),
+                      _buildUsername(),
+                      SizedBox(
+                        height: 10.0,
+                      ),
                       _buildEmailTF(),
                       SizedBox(
-                        height: 30.0,
+                        height: 15.0,
                       ),
                       _buildPasswordTF(),
                       _buildForgotPasswordBtn(),
