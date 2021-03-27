@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'package:plantgo_alpha/constans/color_constans.dart';
-import 'package:plantgo_alpha/screens/home/auth/authentication_service.dart';
+import 'package:plantgo_alpha/screens/auth/authentication_service.dart';
 import 'package:plantgo_alpha/screens/home/pages/body.dart';
 import 'package:plantgo_alpha/screens/home/pages/profile.dart';
 import 'package:plantgo_alpha/screens/home/pages/forum.dart';

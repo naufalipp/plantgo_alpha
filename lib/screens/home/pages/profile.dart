@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:plantgo_alpha/constans/color_constans.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:plantgo_alpha/screens/home/auth/authentication_google.dart';
-import 'package:plantgo_alpha/screens/home/auth/login_page.dart';
+import 'package:plantgo_alpha/screens/auth/authentication_google.dart';
+import 'package:plantgo_alpha/screens/auth/login_page.dart';
 
 class Profile extends StatelessWidget {
   @override
