@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:page_transition/page_transition.dart';
+
+import 'package:plantgo_alpha/screens/auth/landing_page.dart';
+import 'package:plantgo_alpha/screens/auth/authentication_service.dart';
 import 'package:plantgo_alpha/constans/fadeanimation.dart';
 import 'package:plantgo_alpha/constans/color_constans.dart';
 import 'package:plantgo_alpha/models/data.dart';
@@ -9,6 +15,52 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFFEFBEB),
+      appBar: AppBar(
+        title: Text(
+          "PlantGo ",
+          style: GoogleFonts.allerta(
+              fontSize: 18, fontWeight: FontWeight.bold, color: kWhiteColor),
+        ),
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: new Icon(Icons.menu),
+            color: kWhiteColor,
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
+        backgroundColor: kDarkGreenColor,
+        elevation: 0.0,
+      ),
+      drawer: Drawer(
+        child: Container(
+            color: kWhiteCalm,
+            child: Column(
+              // Changed this to a Column from a ListView
+              children: <Widget>[
+                _createHeader(),
+                ListTile(title: Text('First item')),
+                Expanded(
+                    child:
+                        Container()), // Add this to force the bottom items to the lowest point
+                Column(
+                  children: <Widget>[
+                    _createFooterItem(
+                        icon: Icons.settings,
+                        text: 'Settings',
+                        onTap: () =>
+                            Navigator.pushReplacementNamed(context, '/')),
+                    _createFooterItem(
+                        icon: Icons.login_outlined,
+                        text: 'Logout',
+                        onTap: () {
+                          logOutDialog(context);
+                        }),
+                  ],
+                ),
+              ],
+            )),
+      ),
       body: SafeArea(
         child: ListView(
           physics:
@@ -214,4 +266,88 @@ class Body extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _createHeader() {
+  return DrawerHeader(
+      margin: EdgeInsets.zero,
+      padding: EdgeInsets.zero,
+      decoration: BoxDecoration(
+          color: kWhiteCalm,
+          image: DecorationImage(
+              fit: BoxFit.fill,
+              image: AssetImage('assets/images/backgroundLogin2.png'))),
+      child: Stack(children: <Widget>[
+        Positioned(
+            bottom: 12.0,
+            left: 16.0,
+            child: Text("PlantGo",
+                style: GoogleFonts.openSans(
+                    color: Colors.amber,
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold))),
+      ]));
+}
+
+Widget _createFooterItem(
+    {IconData icon, String text, GestureTapCallback onTap}) {
+  return ListTile(
+    title: Row(
+      children: <Widget>[
+        Icon(icon),
+        Padding(
+          padding: EdgeInsets.only(left: 8.0),
+          child: Text(text),
+        )
+      ],
+    ),
+    onTap: onTap,
+  );
+}
+
+logOutDialog(BuildContext context) {
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: kDarkGreenColor,
+          title: Text('Log Out?',
+              style: TextStyle(
+                  color: kWhiteColor,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold)),
+          actions: [
+            MaterialButton(
+                child: Text('No',
+                    style: TextStyle(
+                        color: kWhiteColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                        decoration: TextDecoration.underline,
+                        decorationColor: kWhiteColor)),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+            MaterialButton(
+                color: Colors.red,
+                child: Text('Yes',
+                    style: TextStyle(
+                      color: kWhiteColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.0,
+                    )),
+                onPressed: () {
+                  Provider.of<AuthenticationService>(context, listen: false)
+                      .logout()
+                      .whenComplete(() {
+                    Navigator.pushReplacement(
+                        context,
+                        PageTransition(
+                            child: LandingPage(),
+                            type: PageTransitionType.bottomToTop));
+                  });
+                })
+          ],
+        );
+      });
 }

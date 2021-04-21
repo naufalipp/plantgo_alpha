@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:page_transition/page_transition.dart';
 
 import 'package:plantgo_alpha/constans/color_constans.dart';
 import 'package:plantgo_alpha/screens/auth/authentication_service.dart';
 import 'package:plantgo_alpha/screens/home/pages/body.dart';
-import 'package:plantgo_alpha/screens/home/pages/profile.dart';
-import 'package:plantgo_alpha/screens/home/pages/forum.dart';
+import 'package:plantgo_alpha/screens/home/pages/profile/profile.dart';
+import 'package:plantgo_alpha/screens/home/pages/forum/forum.dart';
+import 'package:plantgo_alpha/screens/auth/firebase_operations.dart';
+import 'package:plantgo_alpha/screens/auth/landing_page.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key, this.title}) : super(key: key);
@@ -20,6 +24,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
+  @override
+  void initState() {
+    Provider.of<FirebaseOperations>(context, listen: false)
+        .initUserData(context);
+    super.initState();
+  }
+
   final _layoutPage = [Body(), Forum(), Profile()];
 
   void _onTapItem(int index) {
@@ -31,48 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(
-        title: Text(
-          "PlantGo ",
-          style: GoogleFonts.allerta(
-              fontSize: 18, fontWeight: FontWeight.bold, color: kWhiteColor),
-        ),
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: new Icon(Icons.menu),
-            color: kWhiteColor,
-            onPressed: () => Scaffold.of(context).openDrawer(),
-          ),
-        ),
-        backgroundColor: kDarkGreenColor,
-        elevation: 0.0,
-      ),
-      drawer: Drawer(
-        child: Column(
-          // Changed this to a Column from a ListView
-          children: <Widget>[
-            _createHeader(),
-            ListTile(title: Text('First item')),
-            Expanded(
-                child:
-                    Container()), // Add this to force the bottom items to the lowest point
-            Column(
-              children: <Widget>[
-                _createFooterItem(
-                    icon: Icons.settings,
-                    text: 'Settings',
-                    onTap: () => Navigator.pushReplacementNamed(context, '/')),
-                _createFooterItem(
-                    icon: Icons.exit_to_app,
-                    text: 'Logout',
-                    onTap: () {
-                      context.read<AuthenticationService>().signOut();
-                    }),
-              ],
-            ),
-          ],
-        ),
-      ),
       body: _layoutPage.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
@@ -84,11 +53,11 @@ class _HomeScreenState extends State<HomeScreen> {
             color: Colors.grey[600], fontFamily: 'Roboto', fontSize: 12.0),
         showUnselectedLabels: true,
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
+          BottomNavigationBarItem(icon: Icon(EvaIcons.home), label: 'Home'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.forum), title: Text('Forum')),
+              icon: Icon(EvaIcons.messageSquare), label: 'Forum'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), title: Text('Profile')),
+              icon: Icon(EvaIcons.person), label: 'Profile'),
         ],
         currentIndex: _selectedIndex,
         onTap: _onTapItem,
@@ -102,6 +71,7 @@ Widget _createHeader() {
       margin: EdgeInsets.zero,
       padding: EdgeInsets.zero,
       decoration: BoxDecoration(
+          color: kWhiteCalm,
           image: DecorationImage(
               fit: BoxFit.fill,
               image: AssetImage('assets/images/backgroundLogin2.png'))),
@@ -109,11 +79,11 @@ Widget _createHeader() {
         Positioned(
             bottom: 12.0,
             left: 16.0,
-            child: Text("Flutter Step-by-Step",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w500))),
+            child: Text("PlantGo",
+                style: GoogleFonts.openSans(
+                    color: Colors.amber,
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold))),
       ]));
 }
 
@@ -131,4 +101,51 @@ Widget _createFooterItem(
     ),
     onTap: onTap,
   );
+}
+
+logOutDialog(BuildContext context) {
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: kDarkGreenColor,
+          title: Text('Log Out?',
+              style: TextStyle(
+                  color: kWhiteColor,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold)),
+          actions: [
+            MaterialButton(
+                child: Text('No',
+                    style: TextStyle(
+                        color: kWhiteColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                        decoration: TextDecoration.underline,
+                        decorationColor: kWhiteColor)),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+            MaterialButton(
+                color: Colors.red,
+                child: Text('Yes',
+                    style: TextStyle(
+                      color: kWhiteColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.0,
+                    )),
+                onPressed: () {
+                  Provider.of<AuthenticationService>(context, listen: false)
+                      .logOutViaEmail()
+                      .whenComplete(() {
+                    Navigator.pushReplacement(
+                        context,
+                        PageTransition(
+                            child: LandingPage(),
+                            type: PageTransitionType.bottomToTop));
+                  });
+                })
+          ],
+        );
+      });
 }

@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:plantgo_alpha/screens/auth/login_page.dart';
-import 'authentication_service.dart';
-import 'package:provider/provider.dart';
 
+import 'package:plantgo_alpha/screens/home/home_screen.dart';
+import 'package:plantgo_alpha/screens/auth/landing_page.dart';
+import 'package:plantgo_alpha/screens/auth/landing_service.dart';
+import 'package:plantgo_alpha/screens/auth/landing_utils.dart';
+import 'package:plantgo_alpha/screens/auth/authentication_service.dart';
+import 'package:plantgo_alpha/screens/auth/firebase_operations.dart';
+
+import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:plantgo_alpha/constans/fadeanimation.dart';
 import 'package:plantgo_alpha/constans/color_constans.dart';
 import 'package:plantgo_alpha/constans/constans.dart';
+import 'package:page_transition/page_transition.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -18,6 +24,30 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   bool _isObscure = true;
   bool _rememberMe = false;
+  TextEditingController userEmailController = TextEditingController();
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController userPasswordController = TextEditingController();
+
+  Widget _buildAvatar() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 120.0),
+          child: Divider(
+            thickness: 4.0,
+            color: kWhiteColor,
+          ),
+        ),
+        CircleAvatar(
+          backgroundImage: FileImage(
+              Provider.of<LandingUtils>(context, listen: false).getUserAvatar),
+          backgroundColor: Colors.red,
+          radius: 60.0,
+        ),
+      ],
+    );
+  }
 
   Widget _buildUsername() {
     return Column(
@@ -26,7 +56,7 @@ class _SignUpPageState extends State<SignUpPage> {
         FadeAnimation(
           2,
           Text(
-            'Username',
+            'Name',
             style: kLabelStyle,
           ),
         ),
@@ -48,6 +78,7 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             height: 60.0,
             child: TextField(
+              controller: userNameController,
               keyboardType: TextInputType.emailAddress,
               style: TextStyle(
                 color: Colors.white,
@@ -60,7 +91,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   Icons.email,
                   color: Colors.white,
                 ),
-                hintText: 'Enter your Username',
+                hintText: 'Enter your Name..',
                 hintStyle: kHintTextStyle,
               ),
             ),
@@ -99,6 +130,7 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             height: 60.0,
             child: TextField(
+              controller: userEmailController,
               keyboardType: TextInputType.emailAddress,
               style: TextStyle(
                 color: Colors.white,
@@ -150,6 +182,7 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             height: 60.0,
             child: TextField(
+              controller: userPasswordController,
               obscureText: _isObscure,
               style: TextStyle(
                 color: Colors.white,
@@ -184,9 +217,11 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _buildForgotPasswordBtn() {
     return Container(
       alignment: Alignment.centerRight,
-      child: FlatButton(
+      child: TextButton(
         onPressed: () => print('Forgot Password Button Pressed'),
-        padding: EdgeInsets.only(right: 0.0),
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.only(right: 0.0),
+        ),
         child: Text(
           'Forgot Password?',
           style: kLabelStyle,
@@ -226,22 +261,50 @@ class _SignUpPageState extends State<SignUpPage> {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
-      child: RaisedButton(
-        elevation: 5.0,
-        onPressed: () => {},
-        padding: EdgeInsets.all(15.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
+      child: ElevatedButton(
+        onPressed: () => {
+          //auth sign up to firebase
+          if (userEmailController.text.isNotEmpty)
+            {
+              Provider.of<AuthenticationService>(context, listen: false)
+                  .createAccount(
+                      userEmailController.text, userPasswordController.text)
+                  .whenComplete(() {
+                print('Creating collection...');
+                Provider.of<FirebaseOperations>(context, listen: false)
+                    .createUserCollection(context, {
+                  'userpassword': userPasswordController.text,
+                  'useruid':
+                      Provider.of<AuthenticationService>(context, listen: false)
+                          .getUserUid,
+                  'useremail': userEmailController.text,
+                  'username': userNameController.text,
+                  'userimage': Provider.of<LandingUtils>(context, listen: false)
+                      .getUserAvatarUrl,
+                });
+              }).whenComplete(() {
+                Navigator.pushReplacement(
+                    context,
+                    PageTransition(
+                        child: HomeScreen(),
+                        type: PageTransitionType.bottomToTop));
+              })
+            }
+          else
+            {warningText(context, 'Fill all the data!')}
+        },
+        style: ElevatedButton.styleFrom(
+          elevation: 5,
+          primary: kWhiteCalm,
+          padding: EdgeInsets.all(15.0),
         ),
-        color: Colors.white,
         child: Text(
           'SIGN UP',
-          style: TextStyle(
+          style: GoogleFonts.openSans(
             color: Color(0xFF527DAA),
             letterSpacing: 1.5,
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
-            fontFamily: 'OpenSans',
           ),
         ),
       ),
@@ -312,7 +375,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LoginPage()));
+            context, MaterialPageRoute(builder: (context) => LandingPage()));
       },
       child: RichText(
         text: TextSpan(
@@ -388,6 +451,10 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      _buildAvatar(),
                       SizedBox(height: 10.0),
                       _buildUsername(),
                       SizedBox(
@@ -413,5 +480,26 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       ),
     );
+  }
+
+  warningText(BuildContext context, String warning) {
+    return showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            decoration: BoxDecoration(
+                color: kDarkGreenColor,
+                borderRadius: BorderRadius.circular(15.0)),
+            height: MediaQuery.of(context).size.height * 0.1,
+            width: MediaQuery.of(context).size.width,
+            child: Center(
+              child: Text(warning,
+                  style: TextStyle(
+                      color: kWhiteColor,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold)),
+            ),
+          );
+        });
   }
 }

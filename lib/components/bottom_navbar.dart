@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:plantgo_alpha/constans/color_constans.dart';
 import 'package:plantgo_alpha/screens/home/pages/body.dart';
-import 'package:plantgo_alpha/screens/home/pages/forum.dart';
-import 'package:plantgo_alpha/screens/home/pages/profile.dart';
+import 'package:plantgo_alpha/screens/home/pages/forum/forum.dart';
+import 'package:plantgo_alpha/screens/home/pages/profile/profile.dart';
 
 class MyBottomNavBar extends StatefulWidget {
   MyBottomNavBar({Key key, this.title}) : super(key: key);
@@ -49,11 +49,10 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
         selectedItemColor: kMainColor,
         unselectedItemColor: kDarkGreenColor,
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.forum), label: 'Forum'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.forum), title: Text('Forum')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), title: Text('Profile')),
+              icon: Icon(Icons.account_circle), label: 'Profile'),
         ],
         currentIndex: _selectedIndex,
         onTap: _onTapItem,
