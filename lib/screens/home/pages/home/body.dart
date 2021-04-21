@@ -9,7 +9,7 @@ import 'package:plantgo_alpha/screens/auth/authentication_service.dart';
 import 'package:plantgo_alpha/constans/fadeanimation.dart';
 import 'package:plantgo_alpha/constans/color_constans.dart';
 import 'package:plantgo_alpha/models/data.dart';
-import 'package:plantgo_alpha/screens/home/pages/plantdetails.dart';
+import 'package:plantgo_alpha/screens/home/pages/home/plantdetails.dart';
 
 class Body extends StatelessWidget {
   @override

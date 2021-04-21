@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:plantgo_alpha/constans/color_constans.dart';
-import 'package:plantgo_alpha/screens/home/pages/body.dart';
+import 'package:plantgo_alpha/screens/home/pages/home/body.dart';
 import 'package:plantgo_alpha/screens/home/pages/forum/forum.dart';
 import 'package:plantgo_alpha/screens/home/pages/profile/profile.dart';
 

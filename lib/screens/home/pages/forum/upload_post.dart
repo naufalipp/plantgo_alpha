@@ -81,7 +81,7 @@ class UploadPost with ChangeNotifier {
         context: context,
         builder: (context) {
           return Container(
-            height: MediaQuery.of(context).size.height * 0.1,
+            height: MediaQuery.of(context).size.height * 0.3,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 color: kDarkGreenColor,
@@ -235,7 +235,10 @@ class UploadPost with ChangeNotifier {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16.0)),
                         onPressed: () {
-                          //pickUploadPostImage(context, ImageSource.gallery);
+                          pickUploadPostImage(
+                              context,
+                              ImageSource
+                                  .gallery); //pickUploadPostImage(context, ImageSource.gallery);
                         }),
                     MaterialButton(
                         color: kDarkGreenColor,

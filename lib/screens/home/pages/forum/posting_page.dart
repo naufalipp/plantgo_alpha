@@ -2,8 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:plantgo_alpha/screens/home/pages/forum/forum.dart';
 
+import 'package:plantgo_alpha/screens/home/home_screen.dart';
+import 'package:plantgo_alpha/screens/home/pages/forum/forum.dart';
 import 'package:plantgo_alpha/screens/home/pages/forum/forum_service.dart';
 import 'package:plantgo_alpha/screens/home/pages/forum/upload_post.dart';
 import 'package:plantgo_alpha/screens/auth/firebase_operations.dart';
@@ -24,7 +25,9 @@ class PostingPage extends StatefulWidget {
 }
 
 class _PostingPageState extends State<PostingPage> {
+  Function _onTapItem;
   TextEditingController captionController = TextEditingController();
+  TextEditingController titlecaptionController = TextEditingController();
   String uploadPostImageUrl, uploadVideoUrl;
   String get getUploadPostImageUrl => uploadPostImageUrl;
   String get getUploadVideoUrl => uploadVideoUrl;
@@ -93,6 +96,51 @@ class _PostingPageState extends State<PostingPage> {
     );
   }
 
+  Widget _buildTitleQuestion() {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          SizedBox(
+              height: 30.0,
+              width: 30.0,
+              child: Icon(Icons.text_fields_rounded)),
+          Container(
+            height: 110.0,
+            width: 5.0,
+            color: kMainColor,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Container(
+              height: 120.0,
+              width: 250.0,
+              child: TextField(
+                maxLines: 2,
+                textCapitalization: TextCapitalization.words,
+                inputFormatters: [LengthLimitingTextInputFormatter(100)],
+                maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                maxLength: 100,
+                controller: titlecaptionController,
+                style: TextStyle(
+                    color: kBlackColor,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold),
+                decoration: InputDecoration(
+                  hintText: 'Add A Title...',
+                  hintStyle: TextStyle(
+                      color: kBlackColor,
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
   Widget _buildMainText() {
     return Container(
       child: Row(
@@ -111,13 +159,13 @@ class _PostingPageState extends State<PostingPage> {
             padding: const EdgeInsets.only(left: 8.0),
             child: Container(
               height: 120.0,
-              width: 330.0,
+              width: 250.0,
               child: TextField(
                 maxLines: 5,
                 textCapitalization: TextCapitalization.words,
-                inputFormatters: [LengthLimitingTextInputFormatter(100)],
-                maxLengthEnforced: true,
-                maxLength: 100,
+                inputFormatters: [LengthLimitingTextInputFormatter(300)],
+                maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                maxLength: 300,
                 controller: captionController,
                 style: TextStyle(
                     color: kBlackColor,
@@ -147,9 +195,10 @@ class _PostingPageState extends State<PostingPage> {
       ),
       onPressed: () async {
         Provider.of<FirebaseOperations>(context, listen: false)
-            .uploadPostData(captionController.text, {
+            .uploadPostData(titlecaptionController.text, {
           'postimage': Provider.of<UploadPost>(context, listen: false)
               .getUploadPostImageUrl,
+          'title': titlecaptionController.text,
           'caption': captionController.text,
           'username': Provider.of<FirebaseOperations>(context, listen: false)
               .getInitUserName,
@@ -170,6 +219,7 @@ class _PostingPageState extends State<PostingPage> {
               .add({
             'postimage': Provider.of<UploadPost>(context, listen: false)
                 .getUploadPostImageUrl,
+            'title': titlecaptionController.text,
             'caption': captionController.text,
             'username': Provider.of<FirebaseOperations>(context, listen: false)
                 .getInitUserName,
@@ -186,7 +236,7 @@ class _PostingPageState extends State<PostingPage> {
           Navigator.pushReplacement(
               context,
               PageTransition(
-                  child: Forum(), type: PageTransitionType.leftToRight));
+                  child: _onTapItem(1), type: PageTransitionType.leftToRight));
         });
       },
       color: kMainColor,
@@ -241,6 +291,8 @@ class _PostingPageState extends State<PostingPage> {
                       SizedBox(
                         height: 10.0,
                       ),
+                      _buildTitleQuestion(),
+                      SizedBox(height: 5.0),
                       _buildMainText(),
                       SizedBox(
                         height: 15.0,
@@ -276,42 +328,5 @@ class _PostingPageState extends State<PostingPage> {
             ),
           );
         });
-  }
-}
-
-class PostingPageProvider with ChangeNotifier {
-  String uploadPostImageUrl, uploadVideoUrl;
-  String get getUploadPostImageUrl => uploadPostImageUrl;
-  String get getUploadVideoUrl => uploadVideoUrl;
-  File uploadPostImage, uploadPostVideo;
-  File get getUploadPostImage => uploadPostImage;
-  File get getUploadPostVideo => uploadPostVideo;
-  UploadTask imagePostUploadTask, videoUploadTask;
-
-  Future uploadPostImageToFirebase() async {
-    Reference imageReference = FirebaseStorage.instance
-        .ref()
-        .child('posts/${uploadPostImage.path}/${TimeOfDay.now()}');
-    imagePostUploadTask = imageReference.putFile(uploadPostImage);
-    await imagePostUploadTask.whenComplete(() {
-      print('Post image uploaded to storage');
-    });
-    imageReference.getDownloadURL().then((imageUrl) {
-      uploadPostImageUrl = imageUrl;
-      print(uploadPostImageUrl);
-    });
-    notifyListeners();
-  }
-
-  Future uploadVideoToFirebase() async {
-    Reference videoReference = FirebaseStorage.instance
-        .ref()
-        .child('videos/${uploadPostVideo.path}/${Timestamp.now()}');
-    videoUploadTask = videoReference.putFile(uploadPostVideo);
-    videoReference.getDownloadURL().then((url) {
-      uploadVideoUrl = url.toString();
-      print(getUploadVideoUrl);
-    });
-    notifyListeners();
   }
 }
