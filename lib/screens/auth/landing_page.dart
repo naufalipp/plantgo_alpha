@@ -44,6 +44,7 @@ class LandingPageState extends State<LandingPage> {
                     child: Column(
                         // positioned nya gamasuk ke coulmn fix this
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Provider.of<LandingHelper>(context, listen: false)
                               .bodyImage(context),

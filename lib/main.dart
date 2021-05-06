@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:plantgo_alpha/screens/home/home_screen.dart';
 import 'package:plantgo_alpha/screens/home/pages/forum/forum_service.dart';
+import 'package:plantgo_alpha/screens/home/pages/forum/post_function.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -37,7 +38,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LandingUtils()),
         ChangeNotifierProvider(create: (_) => ProfileService()),
         ChangeNotifierProvider(create: (_) => ForumService()),
-        ChangeNotifierProvider(create: (_) => UploadPost())
+        ChangeNotifierProvider(create: (_) => UploadPost()),
+        ChangeNotifierProvider(create: (_) => PostFunction())
       ],
     );
   }

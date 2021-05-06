@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:plantgo_alpha/constans/color_constans.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:plantgo_alpha/screens/home/pages/forum/upload_post.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -18,7 +19,10 @@ class Profile extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Provider.of<UploadPost>(context, listen: false)
+                .selectPostType(context);
+          },
           icon: Icon(EvaIcons.settings2Outline, color: kWhiteColor),
         ),
         actions: [

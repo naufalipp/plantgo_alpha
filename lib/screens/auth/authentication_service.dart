@@ -77,8 +77,4 @@ class AuthenticationService with ChangeNotifier {
       FlutterError.reportError(FlutterErrorDetails(exception: e, stack: st));
     }
   }
-
-  Future<User> getCurrentUser() async {
-    return firebaseAuth.currentUser;
-  }
 }

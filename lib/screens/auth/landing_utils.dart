@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:plantgo_alpha/constans/color_constans.dart';
@@ -41,11 +42,21 @@ class LandingUtils with ChangeNotifier {
                     color: kWhiteColor,
                   ),
                 ),
+                Center(
+                  child: Text('Silahkan upload foto profile',
+                      style: GoogleFonts.openSans(
+                          color: kWhiteColor,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 18.0)),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     MaterialButton(
-                        color: Colors.blue,
+                        color: Colors.amber,
                         child: Text('Gallery',
                             style: TextStyle(
                                 color: kWhiteColor,
@@ -60,7 +71,7 @@ class LandingUtils with ChangeNotifier {
                           });
                         }),
                     MaterialButton(
-                        color: Colors.blue,
+                        color: Colors.amber,
                         child: Text('Camera',
                             style: TextStyle(
                                 color: kWhiteColor,
@@ -78,10 +89,11 @@ class LandingUtils with ChangeNotifier {
                 )
               ],
             ),
-            height: MediaQuery.of(context).size.height * 0.1,
+            height: MediaQuery.of(context).size.height * 0.3,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-                color: kGreyColor, borderRadius: BorderRadius.circular(12.0)),
+                color: Colors.blue[800],
+                borderRadius: BorderRadius.circular(12.0)),
           );
         });
   }

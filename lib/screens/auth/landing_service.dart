@@ -1,10 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:plantgo_alpha/constans/fadeanimation.dart';
 
+import 'package:plantgo_alpha/constans/constans.dart';
 import 'package:plantgo_alpha/constans/color_constans.dart';
 import 'package:plantgo_alpha/screens/home/home_screen.dart';
 import 'package:plantgo_alpha/screens/auth/landing_utils.dart';
@@ -16,6 +20,8 @@ class LandingService with ChangeNotifier {
   TextEditingController userEmailController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
   TextEditingController userPasswordController = TextEditingController();
+  bool _isObscure = true;
+  final _formKey = GlobalKey<FormState>();
 
   showUserAvatar(BuildContext context) {
     return showModalBottomSheet(
@@ -66,11 +72,7 @@ class LandingService with ChangeNotifier {
                                     listen: false)
                                 .uploadUserAvatar(context)
                                 .whenComplete(() {
-                              Navigator.pushReplacement(
-                                  context,
-                                  PageTransition(
-                                      child: SignUpPage(),
-                                      type: PageTransitionType.leftToRight));
+                              signInSheet(context);
                             });
                           })
                     ],
@@ -84,6 +86,11 @@ class LandingService with ChangeNotifier {
             ),
           );
         });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: CircularProgressIndicator());
   }
 
   Widget passswordLessSignIn(BuildContext context) {
@@ -256,123 +263,257 @@ class LandingService with ChangeNotifier {
             borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
         context: context,
         isScrollControlled: true,
-        builder: (context) {
-          return Padding(
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 120.0),
-                  child: Divider(
-                    thickness: 4.0,
-                    color: kWhiteColor,
-                  ),
+        builder: (context) => Container(
+              height: MediaQuery.of(context).size.height * 0.965,
+              decoration: new BoxDecoration(
+                color: kMainColor,
+                borderRadius: new BorderRadius.only(
+                  topLeft: const Radius.circular(16.0),
+                  topRight: const Radius.circular(16.0),
                 ),
-                CircleAvatar(
-                  backgroundImage: FileImage(
-                      Provider.of<LandingUtils>(context, listen: false)
-                          .getUserAvatar),
-                  backgroundColor: Colors.red,
-                  radius: 60.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: TextField(
-                    controller: userNameController,
-                    decoration: InputDecoration(
-                      hintText: 'Enter name...',
-                      hintStyle: TextStyle(
-                          color: kWhiteColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0),
-                    ),
-                    style: TextStyle(
+              ),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 120.0),
+                      child: Divider(
+                        thickness: 4.0,
                         color: kWhiteColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: TextField(
-                    controller: userEmailController,
-                    decoration: InputDecoration(
-                      hintText: 'Enter Email...',
-                      hintStyle: TextStyle(
-                          color: kWhiteColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0),
+                      ),
                     ),
-                    style: TextStyle(
-                        color: kWhiteColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: TextField(
-                    controller: userPasswordController,
-                    decoration: InputDecoration(
-                      hintText: 'Enter Password...',
-                      hintStyle: TextStyle(
-                          color: kWhiteColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0),
-                    ),
-                    style: TextStyle(
-                        color: kWhiteColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: FloatingActionButton(
+                    CircleAvatar(
+                      backgroundImage: FileImage(
+                          Provider.of<LandingUtils>(context, listen: false)
+                              .getUserAvatar),
                       backgroundColor: Colors.red,
-                      child: Icon(FontAwesomeIcons.check, color: kWhiteColor),
-                      onPressed: () {
-                        //auth sign up to firebase
-                        if (userEmailController.text.isNotEmpty) {
-                          Provider.of<AuthenticationService>(context,
-                                  listen: false)
-                              .createAccount(userEmailController.text,
-                                  userPasswordController.text)
-                              .whenComplete(() {
-                            print('Creating collection...');
-                            Provider.of<FirebaseOperations>(context,
-                                    listen: false)
-                                .createUserCollection(context, {
-                              'userpassword': userPasswordController.text,
-                              'useruid': Provider.of<AuthenticationService>(
+                      radius: 60.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          FadeAnimation(
+                            2,
+                            Text(
+                              'Nama',
+                              style: kLabelStyle,
+                            ),
+                          ),
+                          SizedBox(height: 10.0),
+                          FadeAnimation(
+                            2,
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              decoration: BoxDecoration(
+                                color: Color(0xFF95CF29),
+                                borderRadius: BorderRadius.circular(10.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 6.0,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              height: 60.0,
+                              child: TextField(
+                                controller: userNameController,
+                                keyboardType: TextInputType.emailAddress,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'OpenSans',
+                                ),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.only(top: 14.0),
+                                  prefixIcon: Icon(
+                                    Icons.email,
+                                    color: Colors.white,
+                                  ),
+                                  hintText: 'Masukan Nama..',
+                                  hintStyle: kHintTextStyle,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          FadeAnimation(
+                            2,
+                            Text(
+                              'Email',
+                              style: kLabelStyle,
+                            ),
+                          ),
+                          SizedBox(height: 10.0),
+                          FadeAnimation(
+                            2,
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              decoration: BoxDecoration(
+                                color: Color(0xFF95CF29),
+                                borderRadius: BorderRadius.circular(10.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 6.0,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              height: 60.0,
+                              child: TextField(
+                                controller: userEmailController,
+                                keyboardType: TextInputType.emailAddress,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'OpenSans',
+                                ),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.only(top: 14.0),
+                                  prefixIcon: Icon(
+                                    Icons.email,
+                                    color: Colors.white,
+                                  ),
+                                  hintText: 'Masukan Email',
+                                  hintStyle: kHintTextStyle,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          FadeAnimation(
+                            2,
+                            Text(
+                              'Password',
+                              style: kLabelStyle,
+                            ),
+                          ),
+                          SizedBox(height: 10.0),
+                          FadeAnimation(
+                            2,
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              decoration: BoxDecoration(
+                                color: Color(0xFF95CF29),
+                                borderRadius: BorderRadius.circular(10.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 6.0,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              height: 60.0,
+                              child: TextField(
+                                controller: userPasswordController,
+                                obscureText: _isObscure,
+                                //validator
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'OpenSans',
+                                ),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.only(top: 14.0),
+                                  prefixIcon: Icon(
+                                    Icons.lock,
+                                    color: Colors.white,
+                                  ),
+                                  hintText: 'Enter your Password',
+                                  hintStyle: kHintTextStyle,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 25.0),
+                        width: 150,
+                        child: ElevatedButton(
+                          onPressed: () => {
+                            //auth sign up to firebase
+                            if (userEmailController.text.isNotEmpty)
+                              {
+                                Provider.of<AuthenticationService>(context,
+                                        listen: false)
+                                    .createAccount(userEmailController.text,
+                                        userPasswordController.text)
+                                    .whenComplete(() {
+                                  print('Creating collection...');
+                                  Provider.of<FirebaseOperations>(context,
+                                          listen: false)
+                                      .createUserCollection(context, {
+                                    'userpassword': userPasswordController.text,
+                                    'useruid':
+                                        Provider.of<AuthenticationService>(
+                                                context,
+                                                listen: false)
+                                            .getUserUid,
+                                    'useremail': userEmailController.text,
+                                    'username': userNameController.text,
+                                    'userimage': Provider.of<LandingUtils>(
+                                            context,
+                                            listen: false)
+                                        .getUserAvatarUrl,
+                                  });
+                                }).whenComplete(() {
+                                  Navigator.pushReplacement(
                                       context,
-                                      listen: false)
-                                  .getUserUid,
-                              'useremail': userEmailController.text,
-                              'username': userNameController.text,
-                              'userimage': Provider.of<LandingUtils>(context,
-                                      listen: false)
-                                  .getUserAvatarUrl,
-                            });
-                          }).whenComplete(() {
-                            Navigator.pushReplacement(
-                                context,
-                                PageTransition(
-                                    child: HomeScreen(),
-                                    type: PageTransitionType.bottomToTop));
-                          });
-                        } else {
-                          warningText(context, 'Fill all the data!');
-                        }
-                      }),
-                )
-              ],
-            ),
-          );
-        });
+                                      PageTransition(
+                                          child: HomeScreen(),
+                                          type:
+                                              PageTransitionType.bottomToTop));
+                                })
+                              }
+                            else
+                              {warningText(context, 'Fill all the data!')}
+                          },
+                          style: ElevatedButton.styleFrom(
+                            elevation: 5,
+                            primary: kWhiteCalm,
+                            padding: EdgeInsets.all(15.0),
+                          ),
+                          child: Text(
+                            'SIGN UP',
+                            style: GoogleFonts.openSans(
+                              color: Color(0xFF527DAA),
+                              letterSpacing: 1.5,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ));
   }
 
   warningText(BuildContext context, String warning) {

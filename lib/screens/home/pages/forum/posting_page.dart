@@ -106,14 +106,14 @@ class _PostingPageState extends State<PostingPage> {
               width: 30.0,
               child: Icon(Icons.text_fields_rounded)),
           Container(
-            height: 110.0,
+            height: 70.0,
             width: 5.0,
             color: kMainColor,
           ),
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Container(
-              height: 120.0,
+              height: 100.0,
               width: 250.0,
               child: TextField(
                 maxLines: 2,
@@ -233,10 +233,7 @@ class _PostingPageState extends State<PostingPage> {
                 .getInitUserEmail
           });
         }).whenComplete(() {
-          Navigator.pushReplacement(
-              context,
-              PageTransition(
-                  child: _onTapItem(1), type: PageTransitionType.leftToRight));
+          Navigator.of(context).pop();
         });
       },
       color: kMainColor,
@@ -246,6 +243,28 @@ class _PostingPageState extends State<PostingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: kMainColor.withOpacity(0.6),
+        centerTitle: true,
+        actions: [
+          IconButton(
+              icon: Icon(Icons.camera_enhance, color: kWhiteCalm),
+              onPressed: () {
+                Provider.of<UploadPost>(context, listen: false)
+                    .selectPostType(context);
+              })
+        ],
+        title: RichText(
+          text: TextSpan(
+            text: 'Komunitas ',
+            style: TextStyle(
+              color: kWhiteCalm,
+              fontWeight: FontWeight.bold,
+              fontSize: 20.0,
+            ),
+          ),
+        ),
+      ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(

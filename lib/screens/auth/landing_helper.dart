@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'package:provider/provider.dart';
@@ -170,53 +171,58 @@ class LandingHelper with ChangeNotifier {
   }
 
   Widget buildLoginBtn(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      Center(
-        child: Container(
-          width: 140,
-          padding: EdgeInsets.symmetric(vertical: 5.0),
-          child: ElevatedButton(
-            onPressed: () => {
-              if (userEmailController.text.isNotEmpty)
-                {
-                  Provider.of<AuthenticationService>(context, listen: false)
-                      .logIntoAccount(
-                          userEmailController.text, userPasswordController.text)
-                      .whenComplete(() {
-                    Navigator.pushReplacement(
-                        context,
-                        PageTransition(
-                            child: HomeScreen(),
-                            type: PageTransitionType.bottomToTop));
-                  })
-                }
-              else
-                {warningText(context, 'Fill all the data!')}
-            },
-            style: ElevatedButton.styleFrom(
-              primary: kWhiteCalm,
-              onPrimary: kDarkGreenColor,
-              onSurface: kGreyColor,
-              elevation: 5.0,
-              padding: EdgeInsets.all(5.0),
-            ),
-            child: Text(
-              'LOGIN',
-              style: TextStyle(
-                color: Color(0xFF527DAA),
-                letterSpacing: 1.5,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'OpenSans',
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Spacer(),
+          Center(
+            child: Container(
+              width: 200,
+              padding: EdgeInsets.symmetric(vertical: 5.0),
+              child: ElevatedButton(
+                onPressed: () => {
+                  if (userEmailController.text.isNotEmpty)
+                    {
+                      Provider.of<AuthenticationService>(context, listen: false)
+                          .logIntoAccount(userEmailController.text,
+                              userPasswordController.text)
+                          .whenComplete(() {
+                        Navigator.pushReplacement(
+                            context,
+                            PageTransition(
+                                child: HomeScreen(),
+                                type: PageTransitionType.bottomToTop));
+                      })
+                    }
+                  else
+                    {warningText(context, 'Fill all the data!')}
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: kWhiteCalm,
+                  onPrimary: kDarkGreenColor,
+                  onSurface: kGreyColor,
+                  elevation: 5.0,
+                  padding: EdgeInsets.all(5.0),
+                ),
+                child: Text(
+                  'LOGIN',
+                  style: TextStyle(
+                    color: Color(0xFF527DAA),
+                    letterSpacing: 1.5,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'OpenSans',
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-      ),
-      SizedBox(
-        height: 10,
-      ),
-    ]);
+          Spacer(),
+          SizedBox(
+            height: 10,
+          ),
+        ]);
   }
 
   Widget mainButton(BuildContext context) {
@@ -228,7 +234,8 @@ class LandingHelper with ChangeNotifier {
           GestureDetector(
             //email icon
             onTap: () {
-              emailAuthSheet(context);
+              Provider.of<LandingUtils>(context, listen: false)
+                  .selectAvatarOptionsSheet(context);
             },
             child: Container(
               child: Icon(EvaIcons.emailOutline, color: Colors.amber),
@@ -275,15 +282,17 @@ class LandingHelper with ChangeNotifier {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 150.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 50.0),
                   child: Divider(
                     thickness: 4.0,
                     color: kWhiteColor,
                   ),
                 ),
-                Provider.of<LandingService>(context, listen: false)
-                    .passswordLessSignIn(context),
-                Text('Pilih Avatar mu'),
+                Text('Pilih Avatar mu',
+                    style: GoogleFonts.openSans(
+                      color: kWhiteCalm,
+                      fontSize: 18,
+                    )),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -313,7 +322,7 @@ class LandingHelper with ChangeNotifier {
                 )
               ],
             ),
-            height: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height * 0.3,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 color: kDarkGreenColor,

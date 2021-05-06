@@ -27,6 +27,7 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController userEmailController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
   TextEditingController userPasswordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   Widget _buildAvatar() {
     return Column(
@@ -154,64 +155,66 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Widget _buildPasswordTF() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        FadeAnimation(
-          2,
-          Text(
-            'Password',
-            style: kLabelStyle,
-          ),
-        ),
-        SizedBox(height: 10.0),
-        FadeAnimation(
-          2,
-          Container(
-            alignment: Alignment.centerLeft,
-            decoration: BoxDecoration(
-              color: Color(0xFF95CF29),
-              borderRadius: BorderRadius.circular(10.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 6.0,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            height: 60.0,
-            child: TextField(
-              controller: userPasswordController,
-              obscureText: _isObscure,
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'OpenSans',
-              ),
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(top: 14.0),
-                prefixIcon: Icon(
-                  Icons.lock,
-                  color: Colors.white,
-                ),
-                hintText: 'Enter your Password',
-                hintStyle: kHintTextStyle,
-                suffixIcon: IconButton(
-                  icon: Icon(
-                      _isObscure ? Icons.visibility : Icons.visibility_off),
-                  onPressed: () {
-                    setState(() {
-                      _isObscure = !_isObscure;
-                    });
-                  },
-                ),
+    return Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            FadeAnimation(
+              2,
+              Text(
+                'Password',
+                style: kLabelStyle,
               ),
             ),
-          ),
-        ),
-      ],
-    );
+            SizedBox(height: 10.0),
+            FadeAnimation(
+              2,
+              Container(
+                alignment: Alignment.centerLeft,
+                decoration: BoxDecoration(
+                  color: Color(0xFF95CF29),
+                  borderRadius: BorderRadius.circular(10.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 6.0,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                height: 60.0,
+                child: TextField(
+                  controller: userPasswordController,
+                  obscureText: _isObscure,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'OpenSans',
+                  ),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.only(top: 14.0),
+                    prefixIcon: Icon(
+                      Icons.lock,
+                      color: Colors.white,
+                    ),
+                    hintText: 'Enter your Password',
+                    hintStyle: kHintTextStyle,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                          _isObscure ? Icons.visibility : Icons.visibility_off),
+                      onPressed: () {
+                        setState(() {
+                          _isObscure = !_isObscure;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ));
   }
 
   Widget _buildForgotPasswordBtn() {
