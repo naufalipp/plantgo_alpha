@@ -8,7 +8,7 @@ class Forum extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kWhiteCalm,
+      backgroundColor: Colors.lightGreen[50],
       drawer: Drawer(),
       appBar: Provider.of<ForumService>(context, listen: false).appBar(context),
       body:

@@ -9,5 +9,6 @@ const kGreyColor = Color(0xFFAAAAAA);
 const kWhiteColor = Color(0xFFFFFFFF);
 const kWhiteCalm = Color(0xFFFEFBEB);
 const kTransarant = Colors.transparent;
+const kLightGreen = Color(0XFFF1F8E9);
 
 const double kDefaultPadding = 20.0;

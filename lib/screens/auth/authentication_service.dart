@@ -1,18 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:plantgo_alpha/models/auth_result_status.dart';
+import 'package:plantgo_alpha/models/auth_exceptions_handler.dart';
 
 class AuthenticationService with ChangeNotifier {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
+  //AuthResultStatus _status;
   bool _loggedIn = false;
-
   bool get loggedIn => _loggedIn;
 
   String userUid;
   String get getUserUid => userUid;
 
-  Future logIntoAccount(String email, String password) async {
+  Stream<User> get authStateChanges => firebaseAuth.idTokenChanges();
+
+  Future<String> logIntoAccount(String email, String password) async {
     try {
       UserCredential userCredential = await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
@@ -20,10 +24,17 @@ class AuthenticationService with ChangeNotifier {
       User user = userCredential.user;
       userUid = user.uid;
       print(userUid);
-
       notifyListeners();
+
+      return "Signed In";
     } on FirebaseAuthException catch (e) {
-      return e.message;
+      if (e.code == 'user-not-found') {
+        return 'No user found for that email.';
+      } else if (e.code == 'wrong-password') {
+        return "Wrong password provided for that user.";
+      } else {
+        return 'Something Went Wrong.';
+      }
     }
   }
 
@@ -72,6 +83,7 @@ class AuthenticationService with ChangeNotifier {
       await firebaseAuth.signOut();
       await googleSignIn.signOut();
       _loggedIn = false;
+      print("User Sign Out");
       notifyListeners();
     } catch (e, st) {
       FlutterError.reportError(FlutterErrorDetails(exception: e, stack: st));

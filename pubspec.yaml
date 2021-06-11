@@ -41,6 +41,9 @@ dependencies:
   chewie: ^0.12.2
   lottie: ^0.7.0+1
   timeago: ^3.0.0
+  cached_network_image: ^2.5.0
+  full_screen_image: ^1.0.2
+  
   #firebase&google
   firebase_core: ^0.7.0
   firebase_analytics: ^7.0.1
@@ -52,14 +55,15 @@ dependencies:
 
   form_field_validator: ^1.0.1
   page_transition: ^1.1.7+5
-
+  modal_progress_hud_nsn: ^0.1.0-nullsafety-1
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
   
 flutter_icons:
-  image_path: "icons/plantoGo_logodoang.png"
-  android: "launcher_icon"
+  image_path: "assets/images/logo_plantgo.png"
+  android: true
   ios: true
 
 # For information on the generic Dart part of this file, see the

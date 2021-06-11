@@ -15,7 +15,7 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFEFBEB),
+      backgroundColor: kLightGreen,
       appBar: AppBar(
         title: Text(
           "PlantGo ",
@@ -70,6 +70,7 @@ class Body extends StatelessWidget {
               2,
               Container(
                 margin: EdgeInsets.only(bottom: kDefaultPadding * 1),
+
                 // It will cover 20% of our total height
                 height: 150,
                 child: Stack(

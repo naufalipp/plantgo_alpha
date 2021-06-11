@@ -122,16 +122,16 @@ class _PostingPageState extends State<PostingPage> {
                 maxLengthEnforcement: MaxLengthEnforcement.enforced,
                 maxLength: 100,
                 controller: titlecaptionController,
-                style: TextStyle(
+                style: GoogleFonts.openSans(
                     color: kBlackColor,
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold),
                 decoration: InputDecoration(
-                  hintText: 'Add A Title...',
-                  hintStyle: TextStyle(
-                      color: kBlackColor,
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.bold),
+                  hintText: 'Beri Judul...',
+                  hintStyle: GoogleFonts.openSans(
+                    color: kGreyColor,
+                    fontSize: 14.0,
+                  ),
                 ),
               ),
             ),
@@ -158,25 +158,25 @@ class _PostingPageState extends State<PostingPage> {
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Container(
-              height: 120.0,
+              height: 160.0,
               width: 250.0,
               child: TextField(
-                maxLines: 5,
+                maxLines: 7,
                 textCapitalization: TextCapitalization.words,
                 inputFormatters: [LengthLimitingTextInputFormatter(300)],
                 maxLengthEnforcement: MaxLengthEnforcement.enforced,
                 maxLength: 300,
                 controller: captionController,
-                style: TextStyle(
-                    color: kBlackColor,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold),
+                style: GoogleFonts.openSans(
+                  color: kBlackColor,
+                  fontSize: 15.0,
+                ),
                 decoration: InputDecoration(
-                  hintText: 'Add A Caption...',
-                  hintStyle: TextStyle(
-                      color: kBlackColor,
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.bold),
+                  hintText: 'Tambahkan isi Pertanyaan...',
+                  hintStyle: GoogleFonts.openSans(
+                    color: kGreyColor,
+                    fontSize: 14.0,
+                  ),
                 ),
               ),
             ),

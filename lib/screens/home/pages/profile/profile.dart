@@ -15,7 +15,7 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kWhiteCalm,
+      backgroundColor: kLightGreen,
       appBar: AppBar(
         centerTitle: true,
         leading: IconButton(
@@ -54,39 +54,36 @@ class Profile extends StatelessWidget {
               ]),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: StreamBuilder<DocumentSnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(
-                      Provider.of<AuthenticationService>(context, listen: false)
-                          .getUserUid)
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else {
-                  return new Column(
-                    children: [
-                      Provider.of<ProfileService>(context, listen: false)
-                          .headerProfile(context, snapshot)
-                    ],
-                  );
-                }
-              },
-            ),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15.0),
-                color: kDarkGreenColor.withOpacity(0.6)),
-          ),
-        ),
+      body: SafeArea(
+        child: ListView(
+            physics:
+                AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
+            children: <Widget>[
+              StreamBuilder<DocumentSnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(Provider.of<AuthenticationService>(context,
+                            listen: false)
+                        .getUserUid)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    return new Column(
+                      children: [
+                        Provider.of<ProfileService>(context, listen: false)
+                            .headerProfile(context, snapshot),
+                        Provider.of<ProfileService>(context, listen: false)
+                            .feedProfile(context, snapshot)
+                      ],
+                    );
+                  }
+                },
+              ),
+            ]),
       ),
     );
   }

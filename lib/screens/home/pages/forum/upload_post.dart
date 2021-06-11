@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:plantgo_alpha/screens/auth/authentication_service.dart';
 import 'package:plantgo_alpha/screens/auth/firebase_operations.dart';
@@ -89,13 +90,38 @@ class UploadPost with ChangeNotifier {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 150.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 100.0),
                   child: Divider(
-                    thickness: 4.0,
+                    thickness: 2.0,
                     color: kWhiteCalm,
                   ),
                 ),
-                Text('Pilih Tipe Post'),
+                SizedBox(
+                  height: 5,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: Container(
+                    padding: EdgeInsets.only(
+                      bottom: 5, // Space between underline and text
+                    ),
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(
+                      color: kGreyColor,
+                      width: 1.0, // Underline thickness
+                    ))),
+                    child: Text("Pilih tipe post",
+                        style: GoogleFonts.openSans(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        )),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -401,9 +427,9 @@ class UploadPost with ChangeNotifier {
                             decoration: InputDecoration(
                               hintText: 'Add A Caption...',
                               hintStyle: TextStyle(
-                                  color: kWhiteCalm,
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.bold),
+                                color: kWhiteCalm,
+                                fontSize: 14.0,
+                              ),
                             ),
                           ),
                         ),
