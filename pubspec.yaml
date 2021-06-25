@@ -43,7 +43,12 @@ dependencies:
   timeago: ^3.0.0
   cached_network_image: ^2.5.0
   full_screen_image: ^1.0.2
-  
+  flushbar: ^1.10.4
+
+  #weather purpose
+  intl: ^0.16.0
+  flutter_weather_icons: ^1.0.2 
+  location: ^3.2.4
   #firebase&google
   firebase_core: ^0.7.0
   firebase_analytics: ^7.0.1

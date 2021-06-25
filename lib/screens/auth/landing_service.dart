@@ -60,21 +60,23 @@ class LandingService with ChangeNotifier {
                             Provider.of<LandingUtils>(context, listen: false)
                                 .pickUserAvatar(context, ImageSource.gallery);
                           }),
-                      MaterialButton(
-                          color: Colors.blue,
-                          child: Text('Confirm Image',
-                              style: TextStyle(
-                                color: kWhiteColor,
-                                fontWeight: FontWeight.bold,
-                              )),
-                          onPressed: () {
-                            Provider.of<FirebaseOperations>(context,
-                                    listen: false)
-                                .uploadUserAvatar(context)
-                                .whenComplete(() {
-                              signInSheet(context);
-                            });
-                          })
+                      Stack(children: [
+                        MaterialButton(
+                            color: Colors.blue,
+                            child: Text('Confirm Image',
+                                style: TextStyle(
+                                  color: kWhiteColor,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            onPressed: () {
+                              Provider.of<FirebaseOperations>(context,
+                                      listen: false)
+                                  .uploadUserAvatar(context)
+                                  .whenComplete(() {
+                                signInSheet(context);
+                              });
+                            }),
+                      ])
                     ],
                   ),
                 )
@@ -285,6 +287,9 @@ class LandingService with ChangeNotifier {
                         color: kWhiteColor,
                       ),
                     ),
+                    SizedBox(
+                      height: 30,
+                    ),
                     CircleAvatar(
                       backgroundImage: FileImage(
                           Provider.of<LandingUtils>(context, listen: false)
@@ -300,7 +305,7 @@ class LandingService with ChangeNotifier {
                           FadeAnimation(
                             2,
                             Text(
-                              'Nama',
+                              'Username',
                               style: kLabelStyle,
                             ),
                           ),
@@ -310,7 +315,11 @@ class LandingService with ChangeNotifier {
                             Container(
                               alignment: Alignment.centerLeft,
                               decoration: BoxDecoration(
-                                color: Color(0xFF95CF29),
+                                border: Border.all(
+                                  color: kLightGreen,
+                                  width: 1.5,
+                                ),
+                                color: kMainColor,
                                 borderRadius: BorderRadius.circular(10.0),
                                 boxShadow: [
                                   BoxShadow(
@@ -335,7 +344,7 @@ class LandingService with ChangeNotifier {
                                     Icons.email,
                                     color: Colors.white,
                                   ),
-                                  hintText: 'Masukan Nama..',
+                                  hintText: 'Masukan Username..',
                                   hintStyle: kHintTextStyle,
                                 ),
                               ),
@@ -344,6 +353,7 @@ class LandingService with ChangeNotifier {
                         ],
                       ),
                     ),
+                    SizedBox(height: 10),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Column(
@@ -362,7 +372,11 @@ class LandingService with ChangeNotifier {
                             Container(
                               alignment: Alignment.centerLeft,
                               decoration: BoxDecoration(
-                                color: Color(0xFF95CF29),
+                                border: Border.all(
+                                  color: kLightGreen,
+                                  width: 1.5,
+                                ),
+                                color: kMainColor,
                                 borderRadius: BorderRadius.circular(10.0),
                                 boxShadow: [
                                   BoxShadow(
@@ -396,6 +410,7 @@ class LandingService with ChangeNotifier {
                         ],
                       ),
                     ),
+                    SizedBox(height: 10),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Column(
@@ -414,7 +429,11 @@ class LandingService with ChangeNotifier {
                             Container(
                               alignment: Alignment.centerLeft,
                               decoration: BoxDecoration(
-                                color: Color(0xFF95CF29),
+                                border: Border.all(
+                                  color: kLightGreen,
+                                  width: 1.5,
+                                ),
+                                color: kMainColor,
                                 borderRadius: BorderRadius.circular(10.0),
                                 boxShadow: [
                                   BoxShadow(
@@ -440,7 +459,7 @@ class LandingService with ChangeNotifier {
                                     Icons.lock,
                                     color: Colors.white,
                                   ),
-                                  hintText: 'Enter your Password',
+                                  hintText: 'Password Minimal 6 Karakter',
                                   hintStyle: kHintTextStyle,
                                 ),
                               ),
@@ -449,63 +468,61 @@ class LandingService with ChangeNotifier {
                         ],
                       ),
                     ),
+                    SizedBox(height: 25),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 25.0),
-                        width: 150,
-                        child: ElevatedButton(
-                          onPressed: () => {
-                            //auth sign up to firebase
-                            if (userEmailController.text.isNotEmpty)
-                              {
-                                Provider.of<AuthenticationService>(context,
+                      child: ElevatedButton(
+                        onPressed: () => {
+                          //auth sign up to firebase
+                          if (userEmailController.text.isNotEmpty)
+                            {
+                              Provider.of<AuthenticationService>(context,
+                                      listen: false)
+                                  .createAccount(userEmailController.text,
+                                      userPasswordController.text)
+                                  .whenComplete(() {
+                                print('Creating collection...');
+                                Provider.of<FirebaseOperations>(context,
                                         listen: false)
-                                    .createAccount(userEmailController.text,
-                                        userPasswordController.text)
-                                    .whenComplete(() {
-                                  print('Creating collection...');
-                                  Provider.of<FirebaseOperations>(context,
+                                    .createUserCollection(context, {
+                                  'userpassword': userPasswordController.text,
+                                  'useruid': Provider.of<AuthenticationService>(
+                                          context,
                                           listen: false)
-                                      .createUserCollection(context, {
-                                    'userpassword': userPasswordController.text,
-                                    'useruid':
-                                        Provider.of<AuthenticationService>(
-                                                context,
-                                                listen: false)
-                                            .getUserUid,
-                                    'useremail': userEmailController.text,
-                                    'username': userNameController.text,
-                                    'userimage': Provider.of<LandingUtils>(
-                                            context,
-                                            listen: false)
-                                        .getUserAvatarUrl,
-                                  });
-                                }).whenComplete(() {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      PageTransition(
-                                          child: HomeScreen(),
-                                          type:
-                                              PageTransitionType.bottomToTop));
-                                })
-                              }
-                            else
-                              {warningText(context, 'Fill all the data!')}
-                          },
-                          style: ElevatedButton.styleFrom(
-                            elevation: 5,
-                            primary: kWhiteCalm,
-                            padding: EdgeInsets.all(15.0),
-                          ),
-                          child: Text(
-                            'SIGN UP',
-                            style: GoogleFonts.openSans(
-                              color: Color(0xFF527DAA),
-                              letterSpacing: 1.5,
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                                      .getUserUid,
+                                  'useremail': userEmailController.text,
+                                  'username': userNameController.text,
+                                  'userimage': Provider.of<LandingUtils>(
+                                          context,
+                                          listen: false)
+                                      .getUserAvatarUrl,
+                                });
+                              }).whenComplete(() {
+                                Navigator.pushReplacement(
+                                    context,
+                                    PageTransition(
+                                        child: HomeScreen(),
+                                        type: PageTransitionType.bottomToTop));
+                              })
+                            }
+                          else
+                            {warningText(context, 'Fill all the data!')}
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: kLightGreen,
+                          onPrimary: kDarkGreenColor,
+                          onSurface: kGreyColor,
+                          elevation: 5.0,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 155, vertical: 10),
+                        ),
+                        child: Text(
+                          'SignUp',
+                          style: GoogleFonts.openSans(
+                            color: kDarkGreenColor,
+                            letterSpacing: 1.2,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),

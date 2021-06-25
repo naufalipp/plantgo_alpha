@@ -27,32 +27,15 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: kMainColor,
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             height: MediaQuery.of(context).size.height * 0.45,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('assets/images/logover3-shadow.png'))),
-          ),
-          RichText(
-            text: TextSpan(
-                text: 'Plant',
-                style: TextStyle(
-                    fontFamily: 'Poppins',
-                    color: kWhiteCalm,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30.0),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: 'Go',
-                    style: TextStyle(
-                        fontFamily: 'Poppins',
-                        color: Colors.amber,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 34.0),
-                  )
-                ]),
+                    image: AssetImage('assets/icons/PlantGo_Logo-v1.png'))),
           ),
         ],
       ),

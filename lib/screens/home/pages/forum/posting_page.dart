@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -40,14 +41,9 @@ class _PostingPageState extends State<PostingPage> {
     return AppBar(
       backgroundColor: kMainColor.withOpacity(0.6),
       centerTitle: true,
-      actions: [
-        IconButton(
-            icon: Icon(Icons.camera_enhance, color: kWhiteCalm),
-            onPressed: () {})
-      ],
       title: RichText(
         text: TextSpan(
-          text: ' Tanya Komunitas ',
+          text: ' Form Diskusi',
           style: TextStyle(
             color: kWhiteCalm,
             fontWeight: FontWeight.bold,
@@ -60,10 +56,10 @@ class _PostingPageState extends State<PostingPage> {
 
   Widget _buildDivider() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 150.0),
+      padding: const EdgeInsets.symmetric(horizontal: 100.0),
       child: Divider(
-        thickness: 4.0,
-        color: kWhiteCalm,
+        thickness: 2.0,
+        color: kMainColor,
       ),
     );
   }
@@ -98,6 +94,7 @@ class _PostingPageState extends State<PostingPage> {
 
   Widget _buildTitleQuestion() {
     return Container(
+      margin: EdgeInsets.all(10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -107,7 +104,7 @@ class _PostingPageState extends State<PostingPage> {
               child: Icon(Icons.text_fields_rounded)),
           Container(
             height: 70.0,
-            width: 5.0,
+            width: 3.0,
             color: kMainColor,
           ),
           Padding(
@@ -138,21 +135,24 @@ class _PostingPageState extends State<PostingPage> {
           )
         ],
       ),
+      decoration: BoxDecoration(
+          color: kWhiteColor, borderRadius: BorderRadius.circular(10.0)),
     );
   }
 
   Widget _buildMainText() {
     return Container(
+      decoration: BoxDecoration(
+          color: kWhiteColor, borderRadius: BorderRadius.circular(10.0)),
+      margin: EdgeInsets.all(10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           SizedBox(
-              height: 30.0,
-              width: 30.0,
-              child: Icon(Icons.text_fields_rounded)),
+              height: 30.0, width: 30.0, child: Icon(EvaIcons.textOutline)),
           Container(
             height: 110.0,
-            width: 5.0,
+            width: 3.0,
             color: kMainColor,
           ),
           Padding(
@@ -162,7 +162,6 @@ class _PostingPageState extends State<PostingPage> {
               width: 250.0,
               child: TextField(
                 maxLines: 7,
-                textCapitalization: TextCapitalization.words,
                 inputFormatters: [LengthLimitingTextInputFormatter(300)],
                 maxLengthEnforcement: MaxLengthEnforcement.enforced,
                 maxLength: 300,
@@ -189,9 +188,9 @@ class _PostingPageState extends State<PostingPage> {
   Widget _buildButton() {
     return MaterialButton(
       child: Text(
-        'Share',
+        'Bagikan',
         style: TextStyle(
-            color: kWhiteCalm, fontWeight: FontWeight.bold, fontSize: 18.0),
+            color: kWhiteColor, fontWeight: FontWeight.bold, fontSize: 18.0),
       ),
       onPressed: () async {
         Provider.of<FirebaseOperations>(context, listen: false)
@@ -251,12 +250,12 @@ class _PostingPageState extends State<PostingPage> {
               icon: Icon(Icons.camera_enhance, color: kWhiteCalm),
               onPressed: () {
                 Provider.of<UploadPost>(context, listen: false)
-                    .selectPostType(context);
+                    .selectPostImageType(context);
               })
         ],
         title: RichText(
           text: TextSpan(
-            text: 'Komunitas ',
+            text: 'Form Diskusi ',
             style: TextStyle(
               color: kWhiteCalm,
               fontWeight: FontWeight.bold,
@@ -275,7 +274,7 @@ class _PostingPageState extends State<PostingPage> {
                 height: double.infinity,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  color: kWhiteCalm,
+                  color: kLightGreen,
                 ),
               ),
               Container(
@@ -289,18 +288,6 @@ class _PostingPageState extends State<PostingPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      FadeAnimation(
-                        2,
-                        Text(
-                          'Komunitas',
-                          style: TextStyle(
-                            color: kDarkGreenColor,
-                            fontFamily: 'OpenSans',
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
                       SizedBox(
                         height: 10.0,
                       ),

@@ -12,6 +12,12 @@ import 'package:plantgo_alpha/screens/home/pages/forum/forum.dart';
 import 'package:plantgo_alpha/screens/auth/firebase_operations.dart';
 import 'package:plantgo_alpha/screens/auth/landing_page.dart';
 
+import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:http/http.dart';
+import 'dart:convert';
+import 'package:plantgo_alpha/models/weather.dart';
+
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key, this.title}) : super(key: key);
 

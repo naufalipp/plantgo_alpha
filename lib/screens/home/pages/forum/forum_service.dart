@@ -18,8 +18,9 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 class ForumService with ChangeNotifier {
   Widget appBar(BuildContext context) {
     return AppBar(
-      backgroundColor: kMainColor.withOpacity(0.6),
+      backgroundColor: kDarkGreenColor,
       centerTitle: true,
+      automaticallyImplyLeading: false,
       actions: [
         IconButton(
             icon: Icon(Icons.camera_enhance, color: kWhiteCalm),
@@ -32,7 +33,7 @@ class ForumService with ChangeNotifier {
         text: TextSpan(
           text: 'Komunitas ',
           style: TextStyle(
-            color: kWhiteCalm,
+            color: Colors.amber,
             fontWeight: FontWeight.bold,
             fontSize: 20.0,
           ),
@@ -123,17 +124,45 @@ class ForumService with ChangeNotifier {
                                                   .bottomToTop));
                                     }
                                   },
-                                  child: CircleAvatar(
-                                    backgroundColor: Colors.amber,
-                                    radius: 20.0,
-                                    backgroundImage: documentSnapshot
-                                                .data()['userimage'] !=
-                                            null
-                                        ? NetworkImage(documentSnapshot
-                                            .data()['userimage'])
-                                        : AssetImage(
-                                            'assets/images/profilepic-default.jpg'),
-                                  ),
+                                  child: Container(
+                                      child: documentSnapshot
+                                                  .data()['userimage'] !=
+                                              null
+                                          ? CachedNetworkImage(
+                                              imageUrl: documentSnapshot
+                                                  .data()['userimage'],
+                                              imageBuilder:
+                                                  (context, imageProvider) =>
+                                                      Container(
+                                                width: 40.0,
+                                                height: 40.0,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: kGreyColor
+                                                      .withOpacity(0.4),
+                                                  image: DecorationImage(
+                                                      image: imageProvider,
+                                                      fit: BoxFit.cover),
+                                                ),
+                                              ),
+                                              placeholder: (context, url) =>
+                                                  CircularProgressIndicator(),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Icon(Icons.error),
+                                            )
+                                          : Container(
+                                              width: 40.0,
+                                              height: 40.0,
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: kGreyColor
+                                                      .withOpacity(0.4),
+                                                  image: DecorationImage(
+                                                      image: AssetImage(
+                                                          'assets/images/profilepic-default.jpg'),
+                                                      fit: BoxFit.cover)),
+                                            )),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
@@ -321,7 +350,7 @@ class ForumService with ChangeNotifier {
                                         ),
                                         StreamBuilder<QuerySnapshot>(
                                             stream: FirebaseFirestore.instance
-                                                .collection(' posts')
+                                                .collection('posts')
                                                 .doc(documentSnapshot
                                                     .data()['title'])
                                                 .collection('comments')
@@ -337,12 +366,26 @@ class ForumService with ChangeNotifier {
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 8.0),
-                                                  child: Text(
-                                                    snapshot.data.docs.length
-                                                        .toString(),
-                                                    style: GoogleFonts.openSans(
-                                                        color: kGreyColor,
-                                                        fontSize: 16.0),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      Provider.of<PostFunction>(
+                                                              context,
+                                                              listen: false)
+                                                          .showComments(
+                                                              context,
+                                                              documentSnapshot,
+                                                              documentSnapshot
+                                                                      .data()[
+                                                                  'title']);
+                                                    },
+                                                    child: Text(
+                                                      snapshot.data.docs.length
+                                                          .toString(),
+                                                      style:
+                                                          GoogleFonts.openSans(
+                                                              color: kGreyColor,
+                                                              fontSize: 16.0),
+                                                    ),
                                                   ),
                                                 );
                                               }
@@ -387,7 +430,7 @@ class ForumService with ChangeNotifier {
 
   Widget smallImage(BuildContext context, DocumentSnapshot documentSnapshot) =>
       FullScreenWidget(
-        backgroundColor: kLightGreen,
+        backgroundColor: kBlackColor,
         backgroundIsTransparent: true,
         child: Center(
           child: Hero(

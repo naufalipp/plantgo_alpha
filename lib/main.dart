@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:plantgo_alpha/constans/color_constans.dart';
+
 import 'package:plantgo_alpha/screens/home/home_screen.dart';
 import 'package:plantgo_alpha/screens/home/pages/forum/forum_service.dart';
 import 'package:plantgo_alpha/screens/home/pages/forum/post_function.dart';
+
 import 'package:plantgo_alpha/screens/home/pages/mutual_profile/mutual_profile_service.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,6 +17,9 @@ import 'package:plantgo_alpha/screens/auth/landing_helper.dart';
 import 'package:plantgo_alpha/screens/home/pages/forum/upload_post.dart';
 import 'package:plantgo_alpha/screens/home/pages/profile/profile_service.dart';
 import 'package:plantgo_alpha/screens/splashscreen/splashscreen.dart';
+
+
+import 'models/weather/weather_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,6 +50,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UploadPost()),
         ChangeNotifierProvider(create: (_) => PostFunction()),
         ChangeNotifierProvider(create: (_) => MutualProfileService()),
+        ChangeNotifierProvider(create: (context) => WeatherProvider()),
         StreamProvider(
             create: (context) =>
                 context.read<AuthenticationService>().authStateChanges),

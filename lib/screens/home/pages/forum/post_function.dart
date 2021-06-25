@@ -20,6 +20,8 @@ class PostFunction with ChangeNotifier {
   String get getImageTimePosted => imageTimePosted;
   bool isLoading = false;
 
+  
+
   showTimeAgo(dynamic timedata) {
     Timestamp time = timedata;
     DateTime dateTime = time.toDate();
@@ -51,12 +53,17 @@ class PostFunction with ChangeNotifier {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         MaterialButton(
-                            color: kDarkGreenColor,
-                            child: Text('Edit Caption',
-                                style: TextStyle(
-                                    color: kWhiteCalm,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16.0)),
+                            color: kLightGreen,
+                            child: Row(
+                              children: [
+                                Icon(EvaIcons.edit2Outline),
+                                Text('Edit Deskripsi',
+                                    style: TextStyle(
+                                        color: kDarkGreenColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0)),
+                              ],
+                            ),
                             onPressed: () {
                               showDialog(
                                   context: context,
@@ -94,7 +101,8 @@ class PostFunction with ChangeNotifier {
                                             Padding(
                                               padding: EdgeInsets.only(
                                                   left: 30.0, right: 30.0),
-                                              child: TextField(
+                                              child: TextFormField(
+                                                
                                                 maxLines: 5,
                                                 textCapitalization:
                                                     TextCapitalization.words,
@@ -109,7 +117,7 @@ class PostFunction with ChangeNotifier {
                                                 controller:
                                                     updatedCaptionController,
                                                 decoration: InputDecoration(
-                                                  hintText: "Add new Caption",
+                                                  hintText: "Tambahkan Deskrpsi baru",
                                                   hintStyle:
                                                       GoogleFonts.openSans(
                                                           color: kGreyColor,
@@ -181,12 +189,17 @@ class PostFunction with ChangeNotifier {
                                   });
                             }),
                         MaterialButton(
-                            color: Colors.red,
-                            child: Text('Delete Post',
-                                style: TextStyle(
-                                    color: kBlackColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16.0)),
+                            color: kLightGreen,
+                            child: Row(
+                              children: [
+                                Icon(EvaIcons.trash2Outline),
+                                Text('Hapus Post',
+                                    style: TextStyle(
+                                        color: kDarkGreenColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0)),
+                              ],
+                            ),
                             onPressed: () {
                               showDialog(
                                   context: context,
@@ -224,6 +237,105 @@ class PostFunction with ChangeNotifier {
                                                       listen: false)
                                                   .deleteUserData(
                                                       postId, 'posts')
+                                                  .whenComplete(() {
+                                                Navigator.pop(context);
+                                              });
+                                            }),
+                                      ],
+                                    );
+                                  });
+                            })
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              height: MediaQuery.of(context).size.height * 0.1,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  color: kDarkGreenColor,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(12.0),
+                      topRight: Radius.circular(12.0))),
+            ),
+          );
+        });
+  }
+
+  showCommentsOptions(BuildContext context, String commentId) {
+    return showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Container(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 150.0),
+                    child: Divider(
+                      thickness: 4.0,
+                      color: kBlackColor,
+                    ),
+                  ),
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        MaterialButton(
+                            color: kDarkGreenColor,
+                            child: Text('Edit komentar',
+                                style: TextStyle(
+                                    color: kWhiteCalm,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.0)),
+                            onPressed: () {}),
+                        MaterialButton(
+                            color: Colors.red,
+                            child: Text('Hapus Komentar',
+                                style: TextStyle(
+                                    color: kBlackColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.0)),
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      backgroundColor: kGreyColor,
+                                      title: Text('hapus Komentar ini?',
+                                          style: TextStyle(
+                                              color: kWhiteCalm,
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.bold)),
+                                      actions: [
+                                        MaterialButton(
+                                            child: Text('Tidak',
+                                                style: TextStyle(
+                                                    decoration: TextDecoration
+                                                        .underline,
+                                                    decorationColor: kWhiteCalm,
+                                                    color: kWhiteCalm,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16.0)),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            }),
+                                        MaterialButton(
+                                            color: Colors.red,
+                                            child: Text('Ya',
+                                                style: TextStyle(
+                                                    color: kWhiteCalm,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16.0)),
+                                            onPressed: () {
+                                              Provider.of<FirebaseOperations>(
+                                                      context,
+                                                      listen: false)
+                                                  .deleteUserComment(
+                                                      commentId, 'comments')
                                                   .whenComplete(() {
                                                 Navigator.pop(context);
                                               });
@@ -321,9 +433,9 @@ class PostFunction with ChangeNotifier {
                     Navigator.pop(context);
                   },
                   child: Icon(
-                    EvaIcons.arrowBack,
+                    Icons.arrow_back,
                     color: kBlackColor,
-                    size: 20.0,
+                    size: 30.0,
                   ),
                 ),
                 Spacer(),
@@ -343,6 +455,10 @@ class PostFunction with ChangeNotifier {
                 Spacer(),
                 SizedBox(width: 16),
               ],
+            ),
+            Flex(
+              direction: Axis.horizontal,
+              children: [Flexible(child: Container())],
             ),
             Expanded(
               child: Container(
@@ -364,98 +480,167 @@ class PostFunction with ChangeNotifier {
                         return new ListView(
                             children: snapshot.data.docs
                                 .map((DocumentSnapshot documentSnapshot) {
-                          return Container(
-                            height: MediaQuery.of(context).size.height * 0.15,
-                            width: MediaQuery.of(context).size.width,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    //ALT Profile
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: CircleAvatar(
-                                        backgroundColor: kDarkGreenColor,
-                                        radius: 15.0,
-                                        backgroundImage: documentSnapshot
-                                                    .data()['userimage'] !=
-                                                null
-                                            ? NetworkImage(documentSnapshot
-                                                .data()['userimage'])
-                                            : AssetImage(
-                                                'assets/images/profilepic-default.jpg'),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Container(
-                                          child: Text(
-                                              documentSnapshot
-                                                  .data()['username'],
-                                              style: TextStyle(
-                                                  color: kBlackColor,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 18.0))),
-                                    ),
-                                    Container(
-                                      child: Row(
+                          return Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Flex(direction: Axis.horizontal, children: [
+                              Flexible(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: kLightGreen),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
                                         children: [
-                                          IconButton(
-                                              icon: Icon(
-                                                  FontAwesomeIcons.arrowUp,
-                                                  color: Colors.cyan[900],
-                                                  size: 12),
-                                              onPressed: () {}),
-                                          Text('0',
-                                              style: TextStyle(
-                                                  color: kBlackColor,
-                                                  fontSize: 14.0,
-                                                  fontWeight: FontWeight.bold)),
-                                          IconButton(
-                                              icon: Icon(FontAwesomeIcons.reply,
-                                                  color: Colors.cyan[900],
-                                                  size: 12),
-                                              onPressed: () {}),
+                                          //ALT Profile
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8.0),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                if (documentSnapshot
+                                                        .data()['useruid'] !=
+                                                    Provider.of<AuthenticationService>(
+                                                            context,
+                                                            listen: false)
+                                                        .getUserUid) {
+                                                  Navigator.pushReplacement(
+                                                      context,
+                                                      PageTransition(
+                                                          child: MutualProfile(
+                                                            userUid:
+                                                                documentSnapshot
+                                                                        .data()[
+                                                                    'useruid'],
+                                                          ),
+                                                          type:
+                                                              PageTransitionType
+                                                                  .bottomToTop));
+                                                }
+                                              },
+                                              child: CircleAvatar(
+                                                backgroundColor:
+                                                    kDarkGreenColor,
+                                                radius: 15.0,
+                                                backgroundImage: documentSnapshot
+                                                                .data()[
+                                                            'userimage'] !=
+                                                        null
+                                                    ? NetworkImage(
+                                                        documentSnapshot.data()[
+                                                            'userimage'])
+                                                    : AssetImage(
+                                                        'assets/images/profilepic-default.jpg'),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8.0),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                if (documentSnapshot
+                                                        .data()['useruid'] !=
+                                                    Provider.of<AuthenticationService>(
+                                                            context,
+                                                            listen: false)
+                                                        .getUserUid) {
+                                                  Navigator.pushReplacement(
+                                                      context,
+                                                      PageTransition(
+                                                          child: MutualProfile(
+                                                            userUid:
+                                                                documentSnapshot
+                                                                        .data()[
+                                                                    'useruid'],
+                                                          ),
+                                                          type:
+                                                              PageTransitionType
+                                                                  .bottomToTop));
+                                                }
+                                              },
+                                              child: Container(
+                                                  child: Text(
+                                                      documentSnapshot
+                                                          .data()['username'],
+                                                      style: TextStyle(
+                                                          color: kBlackColor,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 16.0))),
+                                            ),
+                                          ),
+
+                                          Expanded(child: SizedBox()),
+                                          Container(
+                                            child: Row(
+                                              children: [
+                                                //add icon upvote here
+                                                Provider.of<AuthenticationService>(
+                                                                context,
+                                                                listen: false)
+                                                            .getUserUid ==
+                                                        documentSnapshot
+                                                            .data()['useruid']
+                                                    ? IconButton(
+                                                        icon: Icon(
+                                                            EvaIcons
+                                                                .moreVertical,
+                                                            color: kGreyColor,
+                                                            size: 16),
+                                                        onPressed: () {
+                                                          Provider.of<PostFunction>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .showCommentsOptions(
+                                                                  context,
+                                                                  documentSnapshot
+                                                                          .data()[
+                                                                      'comment']);
+                                                        })
+                                                    : Container(
+                                                        width: 0.0, height: 0.0)
+                                              ],
+                                            ),
+                                          )
                                         ],
                                       ),
-                                    )
-                                  ],
-                                ),
-                                Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Row(
-                                    children: [
-                                      IconButton(
-                                          icon: Icon(
-                                            Icons.arrow_forward_ios,
-                                            color: Colors.cyan[900],
-                                            size: 12,
-                                          ),
-                                          onPressed: () {}),
                                       Container(
                                         width:
-                                            MediaQuery.of(context).size.width *
-                                                0.75,
-                                        child: Text(
-                                          documentSnapshot.data()['comment'],
-                                          style: TextStyle(
-                                              color: kBlackColor,
-                                              fontSize: 16.0),
+                                            MediaQuery.of(context).size.width,
+                                        margin: EdgeInsets.only(left: 8),
+                                        child: Row(
+                                          children: [
+                                            SizedBox(width: 35),
+                                            Row(children: [
+                                              Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.85,
+                                                child: Text(
+                                                  documentSnapshot
+                                                      .data()['comment'],
+                                                  style: TextStyle(
+                                                      color: kBlackColor,
+                                                      fontSize: 16.0),
+                                                ),
+                                              ),
+                                            ]),
+                                          ],
                                         ),
                                       ),
-                                      IconButton(
-                                          icon: Icon(FontAwesomeIcons.trashAlt,
-                                              color: Colors.red[300], size: 16),
-                                          onPressed: () {}),
+                                      Divider(
+                                          color:
+                                              kDarkGreenColor.withOpacity(0.2)),
                                     ],
                                   ),
                                 ),
-                                Divider(
-                                    color: kDarkGreenColor.withOpacity(0.2)),
-                              ],
-                            ),
+                              ),
+                            ]),
                           );
                         }).toList());
                       }
@@ -463,27 +648,29 @@ class PostFunction with ChangeNotifier {
                   )),
             ),
             Container(
+                color: kWhiteColor.withOpacity(0.6),
                 width: 400,
-                height: 50.0,
+                height: 120.0,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
                       width: 300.0,
-                      height: 20.0,
-                      child: TextField(
-                        textCapitalization: TextCapitalization.sentences,
-                        decoration: InputDecoration(
-                            hintText: 'Add Comment...',
-                            hintStyle: GoogleFonts.openSans(
-                              color: kGreyColor,
-                              fontSize: 16,
-                            )),
-                        controller: commentController,
+                      height: 110.0,
+                      child: TextFormField(
                         style: GoogleFonts.openSans(
                           color: kBlackColor,
-                          fontSize: 16,
+                          fontSize: 14,
                         ),
+                        maxLines: 4,
+                        decoration: InputDecoration(
+                          hintText: 'Add Comment...',
+                          hintStyle: GoogleFonts.openSans(
+                            color: kGreyColor,
+                            fontSize: 14,
+                          ),
+                        ),
+                        controller: commentController,
                       ),
                     ),
                     FloatingActionButton(

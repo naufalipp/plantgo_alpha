@@ -12,6 +12,7 @@ import 'package:plantgo_alpha/screens/auth/firebase_operations.dart';
 import 'package:plantgo_alpha/screens/auth/landing_page.dart';
 
 class Profile extends StatelessWidget {
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,8 +21,6 @@ class Profile extends StatelessWidget {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            Provider.of<UploadPost>(context, listen: false)
-                .selectPostType(context);
           },
           icon: Icon(EvaIcons.settings2Outline, color: kWhiteColor),
         ),

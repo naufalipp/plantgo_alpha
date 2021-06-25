@@ -170,7 +170,7 @@ class UploadPost with ChangeNotifier {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 150.0),
                   child: Divider(
-                    thickness: 4.0,
+                    thickness: 2.0,
                     color: kWhiteCalm,
                   ),
                 ),
@@ -203,10 +203,10 @@ class UploadPost with ChangeNotifier {
                                 .pickVideo(context);
                           }),
                       MaterialButton(
-                          color: kMainColor,
+                          color: kLightGreen,
                           child: Text('Upload Video',
                               style: TextStyle(
-                                  color: kWhiteCalm,
+                                  color: kDarkGreenColor,
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.bold)),
                           onPressed: () async {
@@ -221,7 +221,7 @@ class UploadPost with ChangeNotifier {
                 )
               ],
             ),
-            height: MediaQuery.of(context).size.height * 0.6,
+            height: MediaQuery.of(context).size.height * 0.8,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 color: kMainColor,
@@ -240,7 +240,7 @@ class UploadPost with ChangeNotifier {
             height: MediaQuery.of(context).size.height * 0.1,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-                color: kGreyColor, borderRadius: BorderRadius.circular(12)),
+                color: kMainColor, borderRadius: BorderRadius.circular(12)),
             child: Column(
               children: [
                 Padding(
@@ -254,10 +254,10 @@ class UploadPost with ChangeNotifier {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     MaterialButton(
-                        color: kDarkGreenColor,
+                        color: kLightGreen,
                         child: Text('Gallery',
                             style: TextStyle(
-                                color: kWhiteCalm,
+                                color: kDarkGreenColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16.0)),
                         onPressed: () {
@@ -267,10 +267,10 @@ class UploadPost with ChangeNotifier {
                                   .gallery); //pickUploadPostImage(context, ImageSource.gallery);
                         }),
                     MaterialButton(
-                        color: kDarkGreenColor,
+                        color: kLightGreen,
                         child: Text('Camera',
                             style: TextStyle(
-                                color: kWhiteCalm,
+                                color: kDarkGreenColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16.0)),
                         onPressed: () {
@@ -328,10 +328,10 @@ class UploadPost with ChangeNotifier {
                             selectPostImageType(context);
                           }),
                       MaterialButton(
-                          color: kMainColor,
+                          color: kLightGreen,
                           child: Text('Confirm Image',
                               style: TextStyle(
-                                color: kWhiteCalm,
+                                color: kDarkGreenColor,
                                 fontWeight: FontWeight.bold,
                               )),
                           onPressed: () {

@@ -1,3 +1,4 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:plantgo_alpha/constans/color_constans.dart';
 import 'package:provider/provider.dart';
@@ -9,17 +10,16 @@ class Forum extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.lightGreen[50],
-      drawer: Drawer(),
       appBar: Provider.of<ForumService>(context, listen: false).appBar(context),
       body:
           Provider.of<ForumService>(context, listen: false).forumBody(context),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Provider.of<UploadPost>(context, listen: false)
-              .selectPostType(context);
+              .selectPostImageType(context);
         },
-        icon: Icon(Icons.add),
-        label: Text("Tanya"),
+        icon: Icon(EvaIcons.editOutline),
+        label: Text("Diskusi"),
         backgroundColor: kMainColor,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,

@@ -45,9 +45,9 @@ class LandingUtils with ChangeNotifier {
                 Center(
                   child: Text('Silahkan upload foto profile',
                       style: GoogleFonts.openSans(
-                          color: kWhiteColor,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 18.0)),
+                          color: kLightGreen,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w500)),
                 ),
                 SizedBox(
                   height: 20,
@@ -56,10 +56,10 @@ class LandingUtils with ChangeNotifier {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     MaterialButton(
-                        color: Colors.amber,
+                        color: kLightGreen,
                         child: Text('Gallery',
                             style: TextStyle(
-                                color: kWhiteColor,
+                                color: kDarkGreenColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18.0)),
                         onPressed: () {
@@ -71,10 +71,10 @@ class LandingUtils with ChangeNotifier {
                           });
                         }),
                     MaterialButton(
-                        color: Colors.amber,
+                        color: kLightGreen,
                         child: Text('Camera',
                             style: TextStyle(
-                                color: kWhiteColor,
+                                color: kDarkGreenColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18.0)),
                         onPressed: () {
@@ -89,11 +89,16 @@ class LandingUtils with ChangeNotifier {
                 )
               ],
             ),
-            height: MediaQuery.of(context).size.height * 0.3,
+            height: MediaQuery.of(context).size.height * 0.2,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-                color: Colors.blue[800],
-                borderRadius: BorderRadius.circular(12.0)),
+                color: kDarkGreenColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12),
+                  bottomLeft: Radius.circular(0),
+                  bottomRight: Radius.circular(0),
+                )),
           );
         });
   }

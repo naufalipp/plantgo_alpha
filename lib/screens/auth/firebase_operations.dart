@@ -63,7 +63,19 @@ class FirebaseOperations with ChangeNotifier {
     return FirebaseFirestore.instance
         .collection(collection)
         .doc(userUid)
-        .delete();
+        .delete()
+        .whenComplete(() => print('post deleted from the database'));
+  }
+
+  Future deleteUserComment(String postId, String commentId) async {
+    return FirebaseFirestore.instance
+        .collection('posts')
+        .doc(postId)
+        .collection('comments')
+        .doc(commentId)
+        .delete()
+        .whenComplete(() => print('comment deleted from the database'));
+    ;
   }
 
   Future updateCaption(String postId, dynamic data) async {

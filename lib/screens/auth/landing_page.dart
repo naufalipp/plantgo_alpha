@@ -73,6 +73,7 @@ class _LandingPageState extends State<LandingPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
+                              SizedBox(height: 30),
                               Provider.of<LandingHelper>(context, listen: false)
                                   .bodyImage(context),
                               Provider.of<LandingHelper>(context, listen: false)
@@ -126,6 +127,10 @@ class _LandingPageState extends State<LandingPage> {
                 decoration: BoxDecoration(
                   color: kTransarant,
                   borderRadius: BorderRadius.circular(10.0),
+                  border: Border.all(
+                    color: kLightGreen,
+                    width: 1.5,
+                  ),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black12,
@@ -179,6 +184,10 @@ class _LandingPageState extends State<LandingPage> {
               decoration: BoxDecoration(
                 color: kTransarant,
                 borderRadius: BorderRadius.circular(10.0),
+                border: Border.all(
+                  color: kLightGreen,
+                  width: 1.5,
+                ),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black12,
@@ -231,22 +240,22 @@ class _LandingPageState extends State<LandingPage> {
         children: [
           _isSubmitting == true
               ? CircularProgressIndicator(
-                  valueColor:
-                      AlwaysStoppedAnimation(Theme.of(context).primaryColor),
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
                 )
               : ElevatedButton(
                   onPressed: _login,
                   style: ElevatedButton.styleFrom(
-                    primary: kWhiteCalm,
+                    primary: kLightGreen,
                     onPrimary: kDarkGreenColor,
                     onSurface: kGreyColor,
                     elevation: 5.0,
-                    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 155, vertical: 10),
                   ),
                   child: Text(
-                    'LOGIN',
+                    'Masuk',
                     style: TextStyle(
-                      color: Color(0xFF527DAA),
+                      color: kDarkGreenColor,
                       letterSpacing: 1.5,
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,

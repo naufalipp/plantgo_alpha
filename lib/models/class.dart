@@ -4,10 +4,25 @@ class Tools {
   Tools({this.name, this.imageUrl});
 }
 
+class Hama {
+  String namehama;
+  String desc;
+  String imagehama;
+  Hama({this.namehama, this.desc, this.imagehama});
+}
+
+class Steps {
+  int no;
+  String step;
+  String imageSteps;
+  Steps({this.no, this.step, this.imageSteps});
+}
+
 class Tanaman {
-  String id, image, title, icon;
-  List<String> steps;
+  String id, image, title, icon, videoUrl;
+  List<Steps> steps;
   List<Tools> tools;
+  List<Hama> hama;
   int color;
 
   Tanaman(
@@ -17,5 +32,7 @@ class Tanaman {
       this.steps,
       this.tools,
       this.color,
-      this.icon});
+      this.icon,
+      this.hama,
+      this.videoUrl});
 }

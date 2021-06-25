@@ -20,52 +20,64 @@ class LandingHelper with ChangeNotifier {
 
   Widget bodyImage(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.45,
+      height: MediaQuery.of(context).size.height * 0.35,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/images/logover3-shadow.png'))),
+              image: AssetImage('assets/icons/plantoGo_logodoang.png'))),
     );
   }
 
   Widget taglineText(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      Container(
-        constraints: BoxConstraints(
-          maxWidth: 170.0,
-        ),
-        child: RichText(
-          text: TextSpan(
-              text: 'Belajar Bercocok ',
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Container(
+          constraints: BoxConstraints(
+            maxWidth: 210.0,
+          ),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 0),
+              child: Container(
+                padding: EdgeInsets.only(
+                  bottom: 1, // Space between underline and text
+                ),
+                decoration: BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(
+                  color: kLightGreen,
+                  width: 1.0, // Underline thickness
+                ))),
+                child: Text(
+                  'Selamat Datang ',
+                  style: TextStyle(
+                      fontFamily: 'Poppins',
+                      letterSpacing: 0.8,
+                      color: kLightGreen,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25.0),
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'Silahkan Login ',
               style: TextStyle(
                   fontFamily: 'Poppins',
-                  color: kWhiteColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.0),
-              children: <TextSpan>[
-                TextSpan(
-                  text: 'Tanam ',
-                  style: TextStyle(
-                      fontFamily: 'Poppins',
-                      color: kWhiteColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0),
-                ),
-                TextSpan(
-                  text: 'PlantGo ',
-                  style: TextStyle(
-                      fontFamily: 'Poppins',
-                      color: Colors.amber[600],
-                      fontWeight: FontWeight.bold,
-                      fontSize: 40.0),
-                ),
-              ]),
+                  letterSpacing: 0.5,
+                  color: kLightGreen,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 18.0),
+            ),
+          ]),
         ),
-      ),
-      SizedBox(
-        height: 10,
-      ),
-    ]);
+        SizedBox(
+          height: 10,
+        ),
+      ],
+    );
   }
 
   Widget buildEmailTF(BuildContext context) {
@@ -228,47 +240,53 @@ class LandingHelper with ChangeNotifier {
   Widget mainButton(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          GestureDetector(
-            //email icon
-            onTap: () {
-              Provider.of<LandingUtils>(context, listen: false)
-                  .selectAvatarOptionsSheet(context);
-            },
-            child: Container(
-              child: Icon(EvaIcons.emailOutline, color: Colors.amber),
-              width: 80.0,
-              height: 40.0,
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.amberAccent),
-                  borderRadius: BorderRadius.circular(10.0)),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                'Belum Memiliki Akun?  ',
+                style: TextStyle(
+                  color: kLightGreen,
+                  fontSize: 16.0,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+              GestureDetector(
+                //email icon
+                onTap: () {
+                  Provider.of<LandingUtils>(context, listen: false)
+                      .selectAvatarOptionsSheet(context);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 0),
+                  child: Container(
+                    padding: EdgeInsets.only(
+                      bottom: 1, // Space between underline and text
+                    ),
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(
+                      color: kLightGreen,
+                      width: 1.0, // Underline thickness
+                    ))),
+                    child: Text(
+                      'Daftar',
+                      style: TextStyle(
+                          fontFamily: 'Poppins',
+                          letterSpacing: 0.8,
+                          color: kLightGreen,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-          GestureDetector(
-            //Google icon
-            onTap: () {
-              print('Signing with google');
-              Provider.of<AuthenticationService>(context, listen: false)
-                  .signInWithGoogle()
-                  .whenComplete(() {
-                Navigator.pushReplacement(
-                    context,
-                    PageTransition(
-                        child: HomeScreen(),
-                        type: PageTransitionType.leftToRight));
-              });
-            },
-            child: Container(
-              child: Icon(FontAwesomeIcons.google, color: Colors.red),
-              width: 80.0,
-              height: 40.0,
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.red),
-                  borderRadius: BorderRadius.circular(10.0)),
-            ),
-          ),
+          SizedBox(height: 20),
         ],
       ),
     );
