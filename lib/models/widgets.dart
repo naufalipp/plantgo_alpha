@@ -12,22 +12,27 @@ class ToolsTag extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        width: 70,
-        height: 80,
-        margin: EdgeInsets.all(10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            FadeInImage.assetNetwork(
-              placeholder: 'assets/images/loading-green.gif',
-              image: tools.imageUrl,
-            ),
-            Text(
-              tools.name,
-              style: GoogleFonts.openSans(color: Colors.black, fontSize: 12),
-            ),
-          ],
+      child: Card(
+        color: kWhiteColor,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        child: Container(
+          width: 80,
+          height: 80,
+          margin: EdgeInsets.all(10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              FadeInImage.assetNetwork(
+                placeholder: 'assets/images/loading-green.gif',
+                image: tools.imageUrl,
+              ),
+              Text(
+                tools.name,
+                style: GoogleFonts.openSans(color: Colors.black, fontSize: 12),
+              ),
+            ],
+          ),
         ),
       ),
     );

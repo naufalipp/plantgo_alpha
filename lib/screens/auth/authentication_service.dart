@@ -16,6 +16,19 @@ class AuthenticationService with ChangeNotifier {
 
   Stream<User> get authStateChanges => firebaseAuth.idTokenChanges();
 
+  Future<String> getCurrentUID() async {
+    try {
+      await firebaseAuth.currentUser;
+      User user = firebaseAuth.currentUser;
+      userUid = user.uid;
+      print('get current userid on auth => $userUid');
+      return "Current user Signed In";
+    } catch (e, st) {
+      FlutterError.reportError(FlutterErrorDetails(exception: e, stack: st));
+    }
+    // here you write the codes to input the data into firestore
+  }
+
   Future<String> logIntoAccount(String email, String password) async {
     try {
       UserCredential userCredential = await firebaseAuth
@@ -52,10 +65,6 @@ class AuthenticationService with ChangeNotifier {
     }
   }
 
-  Future logOutViaEmail() {
-    return firebaseAuth.signOut();
-  }
-
   Future signInWithGoogle() async {
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
     final GoogleSignInAuthentication googleSignInAuthentication =
@@ -78,10 +87,14 @@ class AuthenticationService with ChangeNotifier {
     return googleSignIn.signOut();
   }
 
+  Future logOutViaEmail() {
+    return firebaseAuth.signOut();
+  }
+
   Future<void> logout() async {
     try {
       await firebaseAuth.signOut();
-      await googleSignIn.signOut();
+      //await googleSignIn.signOut();
       _loggedIn = false;
       print("User Sign Out");
       notifyListeners();

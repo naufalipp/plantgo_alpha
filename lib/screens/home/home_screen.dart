@@ -12,7 +12,6 @@ import 'package:plantgo_alpha/screens/home/pages/forum/forum.dart';
 import 'package:plantgo_alpha/screens/auth/firebase_operations.dart';
 import 'package:plantgo_alpha/screens/auth/landing_page.dart';
 
-import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
@@ -53,10 +52,10 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
         selectedItemColor: kDarkGreenColor,
         unselectedItemColor: kMainColor,
-        selectedLabelStyle:
-            TextStyle(color: kMainColor, fontFamily: 'Roboto', fontSize: 14.0),
-        unselectedLabelStyle: TextStyle(
-            color: Colors.grey[600], fontFamily: 'Roboto', fontSize: 12.0),
+        selectedLabelStyle: GoogleFonts.openSans(
+            color: kMainColor, fontSize: 14.0, fontWeight: FontWeight.bold),
+        unselectedLabelStyle:
+            GoogleFonts.openSans(color: Colors.grey[600], fontSize: 12.0),
         showUnselectedLabels: true,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(EvaIcons.home), label: 'Home'),
@@ -71,6 +70,9 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+void initializeCurrentUser(
+    AuthenticationService authenticationService, BuildContext context) {}
 
 Widget _createHeader() {
   return DrawerHeader(

@@ -70,23 +70,37 @@ class MutualProfileService with ChangeNotifier {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 10.0),
-                        child: CachedNetworkImage(
-                          imageUrl: snapshot.data.data()['userimage'],
-                          imageBuilder: (context, imageProvider) => Container(
-                            width: 90.0,
-                            height: 90.0,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: kGreyColor.withOpacity(0.4),
-                              image: DecorationImage(
-                                  image: imageProvider, fit: BoxFit.cover),
-                            ),
-                          ),
-                          placeholder: (context, url) =>
-                              CircularProgressIndicator(),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
-                        ),
+                        child: snapshot.data.data()['userimage'] != null
+                            ? CachedNetworkImage(
+                                imageUrl: snapshot.data.data()['userimage'],
+                                imageBuilder: (context, imageProvider) =>
+                                    Container(
+                                  width: 90.0,
+                                  height: 90.0,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: kGreyColor.withOpacity(0.4),
+                                    image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover),
+                                  ),
+                                ),
+                                placeholder: (context, url) =>
+                                    CircularProgressIndicator(),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
+                              )
+                            : Container(
+                                decoration: new BoxDecoration(
+                                  color: Colors.grey.withOpacity(0.3),
+                                  shape: BoxShape.circle,
+                                ),
+                                width: 90,
+                                child: Icon(
+                                  Icons.person,
+                                  size: 70,
+                                ),
+                              ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
@@ -714,23 +728,25 @@ followedNotification(BuildContext context, String name) {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 150.0),
                   child: Divider(
-                    thickness: 4.0,
+                    thickness: 2.0,
                     color: kWhiteCalm,
                   ),
                 ),
                 Text('Anda Mem-Follow $name',
-                    style: TextStyle(
-                        color: kWhiteCalm,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16))
+                    style:
+                        GoogleFonts.openSans(color: kWhiteCalm, fontSize: 16))
               ],
             ),
           ),
           height: MediaQuery.of(context).size.height * 0.1,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
-              color: Colors.purple[900],
-              borderRadius: BorderRadius.circular(12.0)),
+            color: Colors.purple,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(8),
+              topRight: Radius.circular(8),
+            ),
+          ),
         );
       });
 }
@@ -786,19 +802,44 @@ checkFollowersSheet(BuildContext context, dynamic snapshot) {
                               )
                             : MaterialButton(
                                 color: kDarkGreenColor,
-                                child: Text('Unfollow',
+                                child: Text('Follow',
                                     style: TextStyle(
                                         color: kWhiteCalm,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16.0)),
                                 onPressed: () {},
                               ),
-                        leading: CircleAvatar(
-                          backgroundColor: kGreyColor,
-                          backgroundImage: NetworkImage(
-                            documentSnapshot.data()['userimage'],
-                          ),
-                        ),
+                        leading: documentSnapshot.data()['userimage'] != null
+                            ? CachedNetworkImage(
+                                imageUrl: documentSnapshot.data()['userimage'],
+                                imageBuilder: (context, imageProvider) =>
+                                    Container(
+                                  width: 35.0,
+                                  height: 35.0,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: kGreyColor.withOpacity(0.4),
+                                    image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover),
+                                  ),
+                                ),
+                                placeholder: (context, url) =>
+                                    CircularProgressIndicator(),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
+                              )
+                            : Container(
+                                decoration: new BoxDecoration(
+                                  color: Colors.grey.withOpacity(0.3),
+                                  shape: BoxShape.circle,
+                                ),
+                                width: 35,
+                                child: Icon(
+                                  Icons.person,
+                                  size: 30,
+                                ),
+                              ),
                         title: Text(
                           documentSnapshot.data()['username'],
                           style: GoogleFonts.openSans(
@@ -875,12 +916,37 @@ checkFollowingSheet(BuildContext context, dynamic snapshot) {
                                         fontSize: 16.0)),
                                 onPressed: () {},
                               ),
-                        leading: CircleAvatar(
-                          backgroundColor: kGreyColor,
-                          backgroundImage: NetworkImage(
-                            documentSnapshot.data()['userimage'],
-                          ),
-                        ),
+                        leading: documentSnapshot.data()['userimage'] != null
+                            ? CachedNetworkImage(
+                                imageUrl: documentSnapshot.data()['userimage'],
+                                imageBuilder: (context, imageProvider) =>
+                                    Container(
+                                  width: 35.0,
+                                  height: 35.0,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: kGreyColor.withOpacity(0.4),
+                                    image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover),
+                                  ),
+                                ),
+                                placeholder: (context, url) =>
+                                    CircularProgressIndicator(),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
+                              )
+                            : Container(
+                                decoration: new BoxDecoration(
+                                  color: Colors.grey.withOpacity(0.3),
+                                  shape: BoxShape.circle,
+                                ),
+                                width: 35,
+                                child: Icon(
+                                  Icons.person,
+                                  size: 30,
+                                ),
+                              ),
                         title: Text(
                           documentSnapshot.data()['username'],
                           style: GoogleFonts.openSans(

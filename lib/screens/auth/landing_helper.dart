@@ -1,7 +1,5 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'package:provider/provider.dart';
@@ -9,7 +7,6 @@ import 'package:plantgo_alpha/constans/constans.dart';
 import 'package:plantgo_alpha/constans/fadeanimation.dart';
 import 'package:plantgo_alpha/constans/color_constans.dart';
 import 'package:plantgo_alpha/screens/home/home_screen.dart';
-import 'package:plantgo_alpha/screens/auth/landing_service.dart';
 import 'package:plantgo_alpha/screens/auth/landing_utils.dart';
 import 'package:plantgo_alpha/screens/auth/authentication_service.dart';
 
@@ -208,7 +205,7 @@ class LandingHelper with ChangeNotifier {
                       })
                     }
                   else
-                    {warningText(context, 'Fill all the data!')}
+                    {warningText(context, 'Form Harap Diisi !')}
                 },
                 style: ElevatedButton.styleFrom(
                   primary: kWhiteCalm,
@@ -290,65 +287,6 @@ class LandingHelper with ChangeNotifier {
         ],
       ),
     );
-  }
-
-  emailAuthSheet(BuildContext context) {
-    return showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return Container(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                  child: Divider(
-                    thickness: 4.0,
-                    color: kWhiteColor,
-                  ),
-                ),
-                Text('Pilih Avatar mu',
-                    style: GoogleFonts.openSans(
-                      color: kWhiteCalm,
-                      fontSize: 18,
-                    )),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    MaterialButton(
-                        color: Colors.purple,
-                        child: Text('Log in',
-                            style: TextStyle(
-                                color: kWhiteColor,
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold)),
-                        onPressed: () {
-                          Provider.of<LandingService>(context, listen: false)
-                              .logInSheet(context);
-                        }),
-                    MaterialButton(
-                        color: Colors.amber,
-                        child: Text('Sign Up',
-                            style: TextStyle(
-                                color: kWhiteColor,
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold)),
-                        onPressed: () {
-                          Provider.of<LandingUtils>(context, listen: false)
-                              .selectAvatarOptionsSheet(context);
-                        })
-                  ],
-                )
-              ],
-            ),
-            height: MediaQuery.of(context).size.height * 0.3,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-                color: kDarkGreenColor,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15.0),
-                    topRight: Radius.circular(15.0))),
-          );
-        });
   }
 
   warningText(BuildContext context, String warning) {

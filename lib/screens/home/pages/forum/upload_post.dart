@@ -29,6 +29,22 @@ class UploadPost with ChangeNotifier {
   File get getUploadPostVideo => uploadPostVideo;
   UploadTask imagePostUploadTask, videoUploadTask;
 
+  bool _isloading = false;
+
+  bool getloading() {
+    return _isloading;
+  }
+
+  void yesloading() {
+    _isloading = true;
+    notifyListeners();
+  }
+
+  void noloading() {
+    _isloading = false;
+    notifyListeners();
+  }
+
   Future pickUploadPostImage(BuildContext context, ImageSource source) async {
     final uploadPostImageVal = await picker.getImage(source: source);
     uploadPostImageVal == null
@@ -327,23 +343,48 @@ class UploadPost with ChangeNotifier {
                           onPressed: () {
                             selectPostImageType(context);
                           }),
-                      MaterialButton(
-                          color: kLightGreen,
-                          child: Text('Confirm Image',
-                              style: TextStyle(
-                                color: kDarkGreenColor,
-                                fontWeight: FontWeight.bold,
-                              )),
-                          onPressed: () {
-                            uploadPostImageToFirebase().whenComplete(() {
-                              Navigator.pushReplacement(
-                                  context,
-                                  PageTransition(
-                                      child: PostingPage(),
-                                      type: PageTransitionType.leftToRight));
-                              print('Image uploaded!');
-                            });
-                          })
+                      Center(
+                        child: Stack(children: [
+                          MaterialButton(
+                              color: kLightGreen,
+                              child: Text('Confirm Image',
+                                  style: TextStyle(
+                                    color: kDarkGreenColor,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                              onPressed: () async {
+                                Provider.of<UploadPost>(context, listen: false)
+                                    .yesloading();
+                                await uploadPostImageToFirebase()
+                                    .whenComplete(() {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      PageTransition(
+                                          child: PostingPage(),
+                                          type:
+                                              PageTransitionType.leftToRight));
+                                  print('Image uploaded!');
+                                });
+                                Provider.of<UploadPost>(context, listen: false)
+                                    .noloading();
+                              }),
+                          Center(
+                            child: SizedBox(
+                              height: 40,
+                              width: 40,
+                              child: Consumer<UploadPost>(
+                                builder: (context, value, child) => value
+                                        .getloading()
+                                    ? CircularProgressIndicator(
+                                        valueColor:
+                                            new AlwaysStoppedAnimation<Color>(
+                                                Colors.purple))
+                                    : Container(),
+                              ),
+                            ),
+                          ),
+                        ]),
+                      )
                     ],
                   ),
                 )
@@ -420,6 +461,7 @@ class UploadPost with ChangeNotifier {
                             maxLengthEnforced: true,
                             maxLength: 100,
                             controller: captionController,
+                            
                             style: TextStyle(
                                 color: kWhiteCalm,
                                 fontSize: 16.0,

@@ -55,12 +55,15 @@ class WeatherWidget extends StatelessWidget {
                   ],
                 ),
                 //Date
-                Text(
-                  DateFormat.yMMMEd().add_jm().format(DateTime.now()),
-                  style: GoogleFonts.openSans(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.green[900],
+                Padding(
+                  padding: const EdgeInsets.only(left: 25),
+                  child: Text(
+                    DateFormat.yMMMEd().format(DateTime.now()),
+                    style: GoogleFonts.openSans(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.green[900],
+                    ),
                   ),
                 ),
                 //Temperature

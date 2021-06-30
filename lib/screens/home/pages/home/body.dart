@@ -149,7 +149,7 @@ class _BodyState extends State<Body> {
                 Expanded(child: Container()),
                 // Add this to force the bottom items to the lowest point
                 Text(
-                  "PlantGo v0.1",
+                  "PlantGo v1.0.0",
                   style: GoogleFonts.openSans(
                       fontSize: 9,
                       color: kBlackColor,
@@ -174,14 +174,15 @@ class _BodyState extends State<Body> {
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(
-                backgroundColor: kMainColor,
-              ),
+                  backgroundColor: kLightGreen,
+                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.purple)),
             )
           : weatherData.loading
               ? Center(
                   child: CircularProgressIndicator(
-                    backgroundColor: kMainColor,
-                  ),
+                      backgroundColor: kLightGreen,
+                      valueColor:
+                          new AlwaysStoppedAnimation<Color>(Colors.purple)),
                 )
               : weatherData.isLocationError
                   ? LocationError()
@@ -193,11 +194,10 @@ class _BodyState extends State<Body> {
                           FadeAnimation(
                             2,
                             Container(
-                              margin:
-                                  EdgeInsets.only(bottom: kDefaultPadding * 1),
+                              color: kLightGreen,
 
                               // It will cover 20% of our total height
-                              height: 185,
+                              height: 225,
                               child: Stack(
                                 children: <Widget>[
                                   Container(
@@ -236,7 +236,7 @@ class _BodyState extends State<Body> {
                                       top: 60,
                                       child: RefreshIndicator(
                                         onRefresh: () => _refreshData(context),
-                                        backgroundColor: kMainColor,
+                                        backgroundColor: Colors.purple,
                                         child: Container(
                                             alignment: Alignment.center,
                                             margin: EdgeInsets.symmetric(
@@ -266,148 +266,180 @@ class _BodyState extends State<Body> {
                                                       .currentWeather),
                                             ])),
                                       )),
+                                  Positioned(
+                                    bottom: 0,
+                                    left: 0,
+                                    right: 0,
+                                    top: 190,
+                                    child: Container(
+                                      height: 30,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 20,
+                                            right: 14,
+                                            bottom: 5,
+                                            top: 5),
+                                        child: Text(
+                                          '• Pilih berbagai tanaman yang anda ingin coba tanam',
+                                          style: GoogleFonts.openSans(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w600,
+                                              color: kDarkGreenColor),
+                                        ),
+                                      ),
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
                           ),
                           FadeAnimation(
-                            2,
-                            Container(
-                              height: 20,
-                              margin: EdgeInsets.only(
-                                  left: 20, right: 14, bottom: 5),
-                              child: Text(
-                                '• Pilih berbagai tanaman yang anda ingin coba tanam',
-                                style: GoogleFonts.openSans(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w600,
-                                    color: kDarkGreenColor),
-                              ),
-                            ),
-                          ),
-                          FadeAnimation(
-                            2,
+                            2.5,
                             Container(
                               color: kLightGreen,
-                              child: ListView.builder(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: Data.tanaman.length,
-                                  itemBuilder: (BuildContext context, int index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 2, left: 16, right: 16, bottom: 8),
-                                      child: InkWell(
-                                        splashColor: kDarkGreenColor,
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      PlantDetails(
-                                                        tanaman:
-                                                            Data.tanaman[index],
-                                                      )));
-                                        },
-                                        child: Card(
-                                            color:
-                                                Color(Data.tanaman[index].color),
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0)),
-                                            child: Container(
-                                              height: 120,
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Expanded(
-                                                    flex: 2,
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceEvenly,
-                                                      children: <Widget>[
-                                                        Container(
-                                                          margin: EdgeInsets.only(
-                                                              left: 10),
-                                                          height: 50,
-                                                          width: 60,
-                                                          child: Image(
-                                                            image: AssetImage(Data
-                                                                .tanaman[index]
-                                                                .icon),
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 80),
+                                child: ListView.builder(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: Data.tanaman.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 2,
+                                            left: 16,
+                                            right: 16,
+                                            bottom: 8),
+                                        child: InkWell(
+                                          splashColor: kDarkGreenColor,
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        PlantDetails(
+                                                          tanaman: Data
+                                                              .tanaman[index],
+                                                        )));
+                                          },
+                                          child: Card(
+                                              color: Color(
+                                                  Data.tanaman[index].color),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0)),
+                                              child: Container(
+                                                height: 120,
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceEvenly,
+                                                        children: <Widget>[
+                                                          Container(
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    left: 10),
+                                                            height: 50,
+                                                            width: 60,
+                                                            child: Image(
+                                                              image: AssetImage(
+                                                                  Data
+                                                                      .tanaman[
+                                                                          index]
+                                                                      .icon),
+                                                            ),
                                                           ),
-                                                        ),
-                                                        Container(
-                                                          margin: EdgeInsets.only(
-                                                              left: 10),
-                                                          child: Text(
-                                                              Data.tanaman[index]
-                                                                  .title,
-                                                              style: GoogleFonts
-                                                                  .allerta(
-                                                                fontSize: 17,
-                                                                color:
-                                                                    Colors.black,
-                                                              )),
-                                                        ),
-                                                      ],
+                                                          Container(
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    left: 10),
+                                                            child: Text(
+                                                                Data
+                                                                    .tanaman[
+                                                                        index]
+                                                                    .title,
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .nunito(
+                                                                  fontSize: 17,
+                                                                  color: Colors
+                                                                          .green[
+                                                                      900],
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                )),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                  Expanded(
-                                                    flex: 2,
-                                                    child: ShaderMask(
-                                                      shaderCallback: (rect) {
-                                                        return LinearGradient(
-                                                          begin: Alignment
-                                                              .centerRight,
-                                                          end: Alignment
-                                                              .centerLeft,
-                                                          colors: [
-                                                            Colors.black,
-                                                            Colors.transparent
-                                                          ],
-                                                        ).createShader(
-                                                            Rect.fromLTRB(
-                                                                0,
-                                                                0,
-                                                                rect.width,
-                                                                rect.height));
-                                                      },
-                                                      blendMode: BlendMode.dstIn,
-                                                      child: ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius.only(
-                                                          bottomRight:
-                                                              Radius.circular(
-                                                                  10.0),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  10.0),
-                                                        ),
-                                                        child: Hero(
-                                                          tag: Data
-                                                              .tanaman[index].id,
-                                                          child: FadeInImage(
-                                                            image: AssetImage(Data
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: ShaderMask(
+                                                        shaderCallback: (rect) {
+                                                          return LinearGradient(
+                                                            begin: Alignment
+                                                                .centerRight,
+                                                            end: Alignment
+                                                                .centerLeft,
+                                                            colors: [
+                                                              Colors.black,
+                                                              Colors.transparent
+                                                            ],
+                                                          ).createShader(
+                                                              Rect.fromLTRB(
+                                                                  0,
+                                                                  0,
+                                                                  rect.width,
+                                                                  rect.height));
+                                                        },
+                                                        blendMode:
+                                                            BlendMode.dstIn,
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    10.0),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    10.0),
+                                                          ),
+                                                          child: Hero(
+                                                            tag: Data
                                                                 .tanaman[index]
-                                                                .image),
-                                                            fit: BoxFit.cover,
-                                                            placeholder: AssetImage(
-                                                                'assets/images/loading-green.gif'),
+                                                                .id,
+                                                            child: FadeInImage(
+                                                              image: AssetImage(
+                                                                  Data
+                                                                      .tanaman[
+                                                                          index]
+                                                                      .image),
+                                                              fit: BoxFit.cover,
+                                                              placeholder:
+                                                                  AssetImage(
+                                                                      'assets/images/loading-green.gif'),
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ],
-                                              ),
-                                            )),
-                                      ),
-                                    );
-                                  }),
+                                                  ],
+                                                ),
+                                              )),
+                                        ),
+                                      );
+                                    }),
+                              ),
                             ),
                           ),
                         ],

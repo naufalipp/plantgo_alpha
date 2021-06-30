@@ -49,7 +49,7 @@ class PlantDetails extends StatelessWidget {
           body: TabBarView(
             children: [
               Container(
-                color: kWhiteColor,
+                color: kLightGreen,
                 padding: EdgeInsets.only(top: 8.0),
                 child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
@@ -84,7 +84,7 @@ class PlantDetails extends StatelessWidget {
                 ),
               ),
               Container(
-                color: kWhiteColor,
+                color: kLightGreen,
                 padding: EdgeInsets.only(top: 8.0),
                 child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),

@@ -285,7 +285,7 @@ class _LandingPageState extends State<LandingPage> {
     });
 
     final logMessage =
-        await Provider.of<AuthenticationService>(context, listen: false)
+        await context.read<AuthenticationService>()
             .logIntoAccount(emailController.text, passwordController.text);
 
     logMessage == "Signed In"

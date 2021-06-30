@@ -23,6 +23,22 @@ class LandingService with ChangeNotifier {
   bool _isObscure = true;
   final _formKey = GlobalKey<FormState>();
 
+  bool _isloading = false;
+
+  bool getloading() {
+    return _isloading;
+  }
+
+  void yesloading() {
+    _isloading = true;
+    notifyListeners();
+  }
+
+  void noloading() {
+    _isloading = false;
+    notifyListeners();
+  }
+
   showUserAvatar(BuildContext context) {
     return showModalBottomSheet(
         context: context,
@@ -61,21 +77,41 @@ class LandingService with ChangeNotifier {
                                 .pickUserAvatar(context, ImageSource.gallery);
                           }),
                       Stack(children: [
-                        MaterialButton(
-                            color: Colors.blue,
-                            child: Text('Confirm Image',
-                                style: TextStyle(
-                                  color: kWhiteColor,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            onPressed: () {
-                              Provider.of<FirebaseOperations>(context,
-                                      listen: false)
-                                  .uploadUserAvatar(context)
-                                  .whenComplete(() {
-                                signInSheet(context);
-                              });
-                            }),
+                        Stack(children: [
+                          MaterialButton(
+                              color: Colors.blue,
+                              child: Text('Confirm Image',
+                                  style: TextStyle(
+                                    color: kWhiteColor,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                              onPressed: () async {
+                                Provider.of<LandingService>(context,
+                                        listen: false)
+                                    .yesloading();
+                                await Provider.of<FirebaseOperations>(context,
+                                        listen: false)
+                                    .uploadUserAvatar(context)
+                                    .whenComplete(() {
+                                  signInSheet(context);
+                                  Provider.of<LandingService>(context,
+                                          listen: false)
+                                      .noloading();
+                                });
+                              }),
+                          Center(
+                            child: Consumer<LandingService>(
+                              builder: (context, value, child) => value
+                                      .getloading()
+                                  ? Center(
+                                      child: CircularProgressIndicator(
+                                          valueColor:
+                                              new AlwaysStoppedAnimation<Color>(
+                                                  Colors.purple)))
+                                  : Container(),
+                            ),
+                          ),
+                        ]),
                       ])
                     ],
                   ),
@@ -95,78 +131,7 @@ class LandingService with ChangeNotifier {
     return Center(child: CircularProgressIndicator());
   }
 
-  Widget passswordLessSignIn(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.40,
-      width: MediaQuery.of(context).size.width,
-      child: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('users').snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            return new ListView(
-                children:
-                    snapshot.data.docs.map((DocumentSnapshot documentSnapshot) {
-              return ListTile(
-                trailing: Container(
-                  width: 120.0,
-                  height: 50.0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      IconButton(
-                        icon: Icon(FontAwesomeIcons.check, color: Colors.blue),
-                        onPressed: () {
-                          Provider.of<AuthenticationService>(context,
-                                  listen: false)
-                              .logIntoAccount(
-                                  documentSnapshot.data()['useremail'],
-                                  documentSnapshot.data()['userpassword'])
-                              .whenComplete(() {
-                            Navigator.pushReplacement(
-                                context,
-                                PageTransition(
-                                    child: HomeScreen(),
-                                    type: PageTransitionType.leftToRight));
-                          });
-                        },
-                      ),
-                      IconButton(
-                        icon:
-                            Icon(FontAwesomeIcons.trashAlt, color: Colors.red),
-                        onPressed: () {
-                          Provider.of<FirebaseOperations>(context,
-                                  listen: false)
-                              .deleteUserData(
-                                  documentSnapshot.data()['useruid'], 'users');
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                leading: CircleAvatar(
-                  backgroundColor: kDarkGreenColor,
-                  backgroundImage:
-                      NetworkImage(documentSnapshot.data()['userimage']),
-                ),
-                subtitle: Text(documentSnapshot.data()['useremail'],
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: kWhiteColor,
-                        fontSize: 12.0)),
-                title: Text(documentSnapshot.data()['username'],
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.green)),
-              );
-            }).toList());
-          }
-        },
-      ),
-    );
-  }
+ 
 
   logInSheet(BuildContext context) {
     return showModalBottomSheet(
@@ -247,7 +212,7 @@ class LandingService with ChangeNotifier {
                                     type: PageTransitionType.bottomToTop));
                           });
                         } else {
-                          warningText(context, 'Fill all the data!');
+                          warningText(context, 'Kolom harap diisi semua!');
                         }
                       })),
             ],
@@ -506,7 +471,7 @@ class LandingService with ChangeNotifier {
                               })
                             }
                           else
-                            {warningText(context, 'Fill all the data!')}
+                            {warningText(context, 'Kolom Data harap diisi !')}
                         },
                         style: ElevatedButton.styleFrom(
                           primary: kLightGreen,
@@ -517,7 +482,7 @@ class LandingService with ChangeNotifier {
                               horizontal: 155, vertical: 10),
                         ),
                         child: Text(
-                          'SignUp',
+                          'Daftar',
                           style: GoogleFonts.openSans(
                             color: kDarkGreenColor,
                             letterSpacing: 1.2,
@@ -526,7 +491,7 @@ class LandingService with ChangeNotifier {
                           ),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -539,8 +504,11 @@ class LandingService with ChangeNotifier {
         builder: (context) {
           return Container(
             decoration: BoxDecoration(
-                color: kDarkGreenColor,
-                borderRadius: BorderRadius.circular(15.0)),
+                color: Colors.purple,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10.0),
+                  topRight: Radius.circular(10.0),
+                )),
             height: MediaQuery.of(context).size.height * 0.1,
             width: MediaQuery.of(context).size.width,
             child: Center(

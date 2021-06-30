@@ -57,8 +57,17 @@ class ProfileService with ChangeNotifier {
                                 errorWidget: (context, url, error) =>
                                     Icon(Icons.error),
                               )
-                            : AssetImage(
-                                'assets/images/profilepic-default.jpg'),
+                            : Container(
+                                decoration: new BoxDecoration(
+                                  color: Colors.grey.withOpacity(0.3),
+                                  shape: BoxShape.circle,
+                                ),
+                                width: 90,
+                                child: Icon(
+                                  Icons.person,
+                                  size: 70,
+                                ),
+                              ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
@@ -76,8 +85,13 @@ class ProfileService with ChangeNotifier {
                             Icon(EvaIcons.email, color: Colors.white, size: 16),
                             Padding(
                               padding: const EdgeInsets.only(left: 8.0),
-                              child: Text(snapshot.data.data()['useremail'],
+                              child: snapshot.data.data()['useremail'] != null
+                              ? Text(
+                                snapshot.data.data()['useremail'],
                                   style: GoogleFonts.openSans(
+                                      color: kWhiteColor, fontSize: 16.0))
+                              : Text("You don't have a username",
+                              style: GoogleFonts.openSans(
                                       color: kWhiteColor, fontSize: 16.0)),
                             ),
                           ],
@@ -579,7 +593,7 @@ class ProfileService with ChangeNotifier {
                       )),
                   onPressed: () {
                     Provider.of<AuthenticationService>(context, listen: false)
-                        .logOutViaEmail()
+                        .logout()
                         .whenComplete(() {
                       Navigator.pushReplacement(
                           context,
@@ -675,12 +689,37 @@ checkFollowerProfilesSheet(BuildContext context, dynamic snapshot) {
                                         fontSize: 16.0)),
                                 onPressed: () {},
                               ),
-                        leading: CircleAvatar(
-                          backgroundColor: kGreyColor,
-                          backgroundImage: NetworkImage(
-                            documentSnapshot.data()['userimage'],
-                          ),
-                        ),
+                        leading: documentSnapshot.data()['userimage'] != null
+                            ? CachedNetworkImage(
+                                imageUrl: documentSnapshot.data()['userimage'],
+                                imageBuilder: (context, imageProvider) =>
+                                    Container(
+                                  width: 15.0,
+                                  height: 15.0,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: kGreyColor.withOpacity(0.4),
+                                    image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover),
+                                  ),
+                                ),
+                                placeholder: (context, url) =>
+                                    CircularProgressIndicator(),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
+                              )
+                            : Container(
+                                decoration: new BoxDecoration(
+                                  color: Colors.grey.withOpacity(0.3),
+                                  shape: BoxShape.circle,
+                                ),
+                                width: 15,
+                                child: Icon(
+                                  Icons.person,
+                                  size: 10,
+                                ),
+                              ),
                         title: Text(
                           documentSnapshot.data()['username'],
                           style: GoogleFonts.openSans(

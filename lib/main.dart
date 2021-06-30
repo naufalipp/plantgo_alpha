@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:plantgo_alpha/constans/color_constans.dart';
+
 
 import 'package:plantgo_alpha/screens/home/home_screen.dart';
 import 'package:plantgo_alpha/screens/home/pages/forum/forum_service.dart';
@@ -17,7 +20,6 @@ import 'package:plantgo_alpha/screens/auth/landing_helper.dart';
 import 'package:plantgo_alpha/screens/home/pages/forum/upload_post.dart';
 import 'package:plantgo_alpha/screens/home/pages/profile/profile_service.dart';
 import 'package:plantgo_alpha/screens/splashscreen/splashscreen.dart';
-
 
 import 'models/weather/weather_provider.dart';
 
@@ -63,10 +65,21 @@ class AuthenticationWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
+    print(firebaseUser);
 
     if (firebaseUser != null) {
       //If the user is successfully Logged-In.
-      return HomeScreen();
+      Provider.of<AuthenticationService>(context, listen: false)
+          .getCurrentUID()
+          .whenComplete(() {
+        Navigator.pushReplacement(
+            context,
+            PageTransition(
+                child: HomeScreen(), type: PageTransitionType.fade));
+      });
+      return Container(
+        color: kDarkGreenColor,
+      );
     } else {
       //If the user is not Logged-In.
       return SplashScreen();

@@ -13,6 +13,7 @@ class LandingUtils with ChangeNotifier {
   String userAvatarUrl;
   String get getUserAvatarUrl => userAvatarUrl;
 
+  
   Future pickUserAvatar(BuildContext context, ImageSource source) async {
     final pickedUserAvatar = await picker.getImage(source: source);
     pickedUserAvatar == null
@@ -57,7 +58,7 @@ class LandingUtils with ChangeNotifier {
                   children: [
                     MaterialButton(
                         color: kLightGreen,
-                        child: Text('Gallery',
+                        child: Text('Galeri',
                             style: TextStyle(
                                 color: kDarkGreenColor,
                                 fontWeight: FontWeight.bold,
@@ -72,7 +73,7 @@ class LandingUtils with ChangeNotifier {
                         }),
                     MaterialButton(
                         color: kLightGreen,
-                        child: Text('Camera',
+                        child: Text('Kamera',
                             style: TextStyle(
                                 color: kDarkGreenColor,
                                 fontWeight: FontWeight.bold,

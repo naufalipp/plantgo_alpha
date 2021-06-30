@@ -24,7 +24,7 @@ class _AboutState extends State<About> {
             Navigator.pushReplacement(
                 context,
                 PageTransition(
-                    child: HomeScreen(), type: PageTransitionType.topToBottom));
+                    child: HomeScreen(), type: PageTransitionType.fade));
           },
           icon: Icon(EvaIcons.arrowBack, color: kWhiteColor),
         ),
@@ -97,6 +97,17 @@ class _AboutState extends State<About> {
                         margin: EdgeInsets.fromLTRB(35, 1, 35, 8),
                         child: Text(
                           "Perlu diketahui Isi dari fungsi dan panduan dalam bercocok tanam di dapatkan oleh pengembang melalui riset jurnal ilmiah, buku, serta laman di internet dan tidak 100% akurat, Pengmbang berusaha semaksimal mungkin dalam memberikan informasi.",
+                          textAlign: TextAlign.justify,
+                          style: GoogleFonts.openSans(
+                            fontSize: 14,
+                            color: kBlackColor,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(35, 1, 35, 8),
+                        child: Text(
+                          "Kritik dan Saran sangat dibutuhkan pengembang dalam membanggun aplikasi ini, agar menjadi lebih baik lagi.",
                           textAlign: TextAlign.justify,
                           style: GoogleFonts.openSans(
                             fontSize: 14,
@@ -178,13 +189,13 @@ class _AboutState extends State<About> {
                                   ),
                                   Container(
                                     margin: EdgeInsets.fromLTRB(5, 1, 5, 8),
-                                    child: Text(
+                                    child: SelectableText(
                                       "naufal211@gmail.com",
                                       textAlign: TextAlign.justify,
                                       style: GoogleFonts.openSans(
-                                          fontSize: 14,
-                                          color: kBlackColor,
-                                          fontWeight: FontWeight.bold),
+                                        fontSize: 14,
+                                        color: kBlackColor,
+                                      ),
                                     ),
                                   ),
                                 ],

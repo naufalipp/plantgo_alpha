@@ -1,9 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:plantgo_alpha/constans/color_constans.dart';
@@ -19,8 +19,6 @@ class PostFunction with ChangeNotifier {
   String imageTimePosted;
   String get getImageTimePosted => imageTimePosted;
   bool isLoading = false;
-
-  
 
   showTimeAgo(dynamic timedata) {
     Timestamp time = timedata;
@@ -102,7 +100,6 @@ class PostFunction with ChangeNotifier {
                                               padding: EdgeInsets.only(
                                                   left: 30.0, right: 30.0),
                                               child: TextFormField(
-                                                
                                                 maxLines: 5,
                                                 textCapitalization:
                                                     TextCapitalization.words,
@@ -116,8 +113,11 @@ class PostFunction with ChangeNotifier {
                                                 maxLength: 300,
                                                 controller:
                                                     updatedCaptionController,
+                                                //..text = postId['caption'],
+
                                                 decoration: InputDecoration(
-                                                  hintText: "Tambahkan Deskrpsi baru",
+                                                  hintText:
+                                                      "Tambahkan Deskrpsi baru",
                                                   hintStyle:
                                                       GoogleFonts.openSans(
                                                           color: kGreyColor,
@@ -521,20 +521,50 @@ class PostFunction with ChangeNotifier {
                                                                   .bottomToTop));
                                                 }
                                               },
-                                              child: CircleAvatar(
-                                                backgroundColor:
-                                                    kDarkGreenColor,
-                                                radius: 15.0,
-                                                backgroundImage: documentSnapshot
-                                                                .data()[
-                                                            'userimage'] !=
-                                                        null
-                                                    ? NetworkImage(
-                                                        documentSnapshot.data()[
-                                                            'userimage'])
-                                                    : AssetImage(
-                                                        'assets/images/profilepic-default.jpg'),
-                                              ),
+                                              child: documentSnapshot.data()[
+                                                          'userimage'] !=
+                                                      null
+                                                  ? CachedNetworkImage(
+                                                      imageUrl: documentSnapshot
+                                                          .data()['userimage'],
+                                                      imageBuilder: (context,
+                                                              imageProvider) =>
+                                                          Container(
+                                                        width: 35.0,
+                                                        height: 35.0,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          color: kGreyColor
+                                                              .withOpacity(0.4),
+                                                          image: DecorationImage(
+                                                              image:
+                                                                  imageProvider,
+                                                              fit:
+                                                                  BoxFit.cover),
+                                                        ),
+                                                      ),
+                                                      placeholder: (context,
+                                                              url) =>
+                                                          CircularProgressIndicator(),
+                                                      errorWidget: (context,
+                                                              url, error) =>
+                                                          Icon(Icons.error),
+                                                    )
+                                                  : Container(
+                                                      decoration:
+                                                          new BoxDecoration(
+                                                        color: Colors.grey
+                                                            .withOpacity(0.3),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                      width: 35,
+                                                      child: Icon(
+                                                        Icons.person,
+                                                        size: 30,
+                                                      ),
+                                                    ),
                                             ),
                                           ),
                                           Padding(
@@ -589,7 +619,7 @@ class PostFunction with ChangeNotifier {
                                                         icon: Icon(
                                                             EvaIcons
                                                                 .moreVertical,
-                                                            color: kGreyColor,
+                                                            color: kLightGreen,
                                                             size: 16),
                                                         onPressed: () {
                                                           Provider.of<PostFunction>(
@@ -759,10 +789,39 @@ class PostFunction with ChangeNotifier {
                                               PageTransitionType.bottomToTop));
                                 }
                               },
-                              child: CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                    documentSnapshot.data()['userimage']),
-                              ),
+                              child: documentSnapshot.data()['userimage'] !=
+                                      null
+                                  ? CachedNetworkImage(
+                                      imageUrl:
+                                          documentSnapshot.data()['userimage'],
+                                      imageBuilder: (context, imageProvider) =>
+                                          Container(
+                                        width: 35.0,
+                                        height: 35.0,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: kGreyColor.withOpacity(0.4),
+                                          image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.cover),
+                                        ),
+                                      ),
+                                      placeholder: (context, url) =>
+                                          CircularProgressIndicator(),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
+                                    )
+                                  : Container(
+                                      decoration: new BoxDecoration(
+                                        color: Colors.grey.withOpacity(0.3),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      width: 35,
+                                      child: Icon(
+                                        Icons.person,
+                                        size: 30,
+                                      ),
+                                    ),
                             ),
                             title: Text(
                               documentSnapshot.data()['username'],
